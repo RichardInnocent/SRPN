@@ -1,0 +1,22 @@
+The program must be able to correctly handle saturation.
+
+Input :
+2147483647
+1
++
+=
+Input :
+-2147483647
+1
+-
+=
+20
+-
+=
+Input :
+100000
+0
+-
+d
+*
+=

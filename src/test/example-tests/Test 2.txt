@@ -1,0 +1,21 @@
+The program must be able to handle multiple numbers and multiple operations.
+
+Input :
+3
+3
+*
+4
+4
+*
++
+=
+Input :
+1234
+2345
+3456
+d
++
+d
++
+d
+=

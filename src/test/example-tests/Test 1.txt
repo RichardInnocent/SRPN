@@ -1,0 +1,27 @@
+The program must be able to input at least two numbers and perform one operation correctly and output.
+
+Input :
+10
+2
++
+=
+Input :
+11
+3
+-
+=
+Input :
+9
+4
+*
+=
+Input :
+11
+3
+/
+=
+Input :
+11
+3
+%
+=
