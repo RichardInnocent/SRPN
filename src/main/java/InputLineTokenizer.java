@@ -89,9 +89,14 @@ public class InputLineTokenizer {
       // We found a tokenizer that can tokenize this. Return the result of the tokenization
       return Optional.of(tokenizer.get().tokenize(remainingCommand));
     } else {
+      char invalidCharacter = remainingCommand.charAt(0);
       // If a character couldn't be tokenized, it must be invalid.
       // Display a warning and ignore the character
-      System.out.printf("Unrecognised operator or operand \"%c\"\n", remainingCommand.charAt(0));
+      if (invalidCharacter > 127) {
+        System.out.print("Unrecognised operator or operand \"�\".\n".repeat(2));
+      } else {
+        System.out.printf("Unrecognised operator or operand \"%c\".\n", remainingCommand.charAt(0));
+      }
       // Return an empty optional to indicate to the caller that we couldn't tokenize this
       return Optional.empty();
     }

@@ -2,7 +2,7 @@
  * Token for the equals sign. This token has the effect of printing the most recent item on the
  * stack to the terminal, without removing it.
  */
-public class EqualsToken extends AbstractToken {
+public class EqualsToken extends ImmediatelyAppliedToken {
 
   /**
    * The equals token prints the most recently added operand on the stack without removing it.

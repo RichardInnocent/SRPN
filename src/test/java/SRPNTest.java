@@ -202,12 +202,20 @@ public class SRPNTest extends SystemOutTest {
   }
 
   @Test
-  public void testSequenceOfNumbersThenOperators() {
+  public void testSequenceOfNumbersThenOperators1() {
     srpn.processCommand("1674 457 159 54 421 27");
     srpn.processCommand("+-*/% d");
     List<String> printedLines = getAllPrintedLinesAndRefresh();
     assertEquals(1, printedLines.size());
     assertEquals("328", printedLines.get(0));
+  }
+
+  @Test
+  public void testSequenceOfNumbersThenOperators2() {
+    srpn.processCommand("457 159 54 448 -/* d");
+    List<String> printedLined = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLined.size());
+    assertEquals("72607", printedLined.get(0));
   }
 
   @Test
@@ -255,7 +263,6 @@ public class SRPNTest extends SystemOutTest {
   @Test
   public void testTooManyOperatorsInASingleGroup3d() {
     srpn.processCommand("12-3+1/ d");
-    //                   12-3+
     List<String> printedLines = getAllPrintedLinesAndRefresh();
     assertEquals(2, printedLines.size());
     assertEquals("Stack underflow.", printedLines.get(0));
@@ -276,5 +283,22 @@ public class SRPNTest extends SystemOutTest {
     List<String> printedLines = getAllPrintedLinesAndRefresh();
     assertEquals(1, printedLines.size());
     assertEquals("-8", printedLines.get(0));
+  }
+
+  @Test
+  public void testVErrorIsPrintedOnce() {
+    srpn.processCommand("v");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLines.size());
+    assertEquals("Unrecognised operator or operand \"v\".", printedLines.get(0));
+  }
+
+  @Test
+  public void testPoundSignErrorIsPrintedTwice() {
+    srpn.processCommand("£");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(2, printedLines.size());
+    assertEquals("Unrecognised operator or operand \"�\".", printedLines.get(0));
+    assertEquals("Unrecognised operator or operand \"�\".", printedLines.get(1));
   }
 }

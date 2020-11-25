@@ -95,16 +95,16 @@ public class SmallOperandTokenTest {
 
   @Test
   public void testTruncatedIntValue() {
-    assertEquals(4, SmallOperandToken.forValue(4).truncateDoubleToIntBounds());
-    assertEquals(-4, SmallOperandToken.forValue(-4).truncateDoubleToIntBounds());
-    assertEquals(0, SmallOperandToken.forValue(0).truncateDoubleToIntBounds());
+    assertEquals(4, SmallOperandToken.forValue(4).intValue());
+    assertEquals(-4, SmallOperandToken.forValue(-4).intValue());
+    assertEquals(0, SmallOperandToken.forValue(0).intValue());
     assertEquals(
         Integer.MAX_VALUE,
-        SmallOperandToken.forValue(Integer.MAX_VALUE).truncateDoubleToIntBounds()
+        SmallOperandToken.forValue(Integer.MAX_VALUE).intValue()
     );
     assertEquals(
         Integer.MIN_VALUE,
-        SmallOperandToken.forValue(Integer.MIN_VALUE).truncateDoubleToIntBounds()
+        SmallOperandToken.forValue(Integer.MIN_VALUE).intValue()
     );
   }
 

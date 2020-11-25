@@ -43,7 +43,7 @@ public class BigOperandToken extends OperandToken {
   }
 
   @Override
-  protected int truncateDoubleToIntBounds() {
+  protected int intValue() {
     if (value.compareTo(UPPER_BOUND) > 0) {
       // If the value is larger than Integer.MAX_VALUE, return Integer.MAX_VALUE
       return UPPER_BOUND.intValue();

@@ -7,7 +7,7 @@ public class SmallOperandToken extends OperandToken {
   }
 
   @Override
-  protected int truncateDoubleToIntBounds() {
+  protected int intValue() {
     return value;
   }
 
@@ -25,10 +25,8 @@ public class SmallOperandToken extends OperandToken {
   }
 
   public static SmallOperandToken forValue(String value) {
-    if (value.startsWith("0")) {
-      return forValue(Integer.parseInt(value, 8));
-    }
-    return forValue(Integer.parseInt(value));
+    int radix = value.startsWith("0") ? 8 : 10;
+    return forValue(Integer.parseInt(value, radix));
   }
 
   @Override

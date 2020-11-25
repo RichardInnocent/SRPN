@@ -70,16 +70,16 @@ public class BigOperandTokenTest {
 
   @Test
   public void testTruncatedIntValue() {
-    assertEquals(4, BigOperandToken.forValue(4).truncateDoubleToIntBounds());
-    assertEquals(-4, BigOperandToken.forValue(-4).truncateDoubleToIntBounds());
-    assertEquals(0, BigOperandToken.forValue(0).truncateDoubleToIntBounds());
+    assertEquals(4, BigOperandToken.forValue(4).intValue());
+    assertEquals(-4, BigOperandToken.forValue(-4).intValue());
+    assertEquals(0, BigOperandToken.forValue(0).intValue());
     assertEquals(
         Integer.MAX_VALUE,
-        BigOperandToken.forValue(Long.toString(Long.MAX_VALUE)).truncateDoubleToIntBounds()
+        BigOperandToken.forValue(Long.toString(Long.MAX_VALUE)).intValue()
     );
     assertEquals(
         Integer.MIN_VALUE,
-        BigOperandToken.forValue(Long.toString(Long.MIN_VALUE)).truncateDoubleToIntBounds()
+        BigOperandToken.forValue(Long.toString(Long.MIN_VALUE)).intValue()
     );
   }
 

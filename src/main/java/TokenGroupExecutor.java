@@ -9,21 +9,23 @@ public class TokenGroupExecutor {
     tokenGroups.forEach(this::execute);
   }
 
-  public void execute(TokenGroup tokenGroup) {
+  public void execute(TokenGroup tokenGroup) throws IllegalArgumentException {
     List<Token> tokens = tokenGroup.getTokens();
     List<OperatorToken> operatorTokens = new ArrayList<>();
     for (Token token : tokens) {
       if (token instanceof OperatorToken) {
         operatorTokens.add((OperatorToken) token);
+      } else if (token instanceof ImmediatelyAppliedToken) {
+        applyTokenAndHandleExceptions((ImmediatelyAppliedToken) token);
       } else {
-        applyTokenAndHandleExceptions(token);
+        throw new IllegalArgumentException("Illegal token argument of type " + token.getClass());
       }
     }
 
     applyOperators(operatorTokens);
   }
 
-  private void applyTokenAndHandleExceptions(Token token) {
+  private void applyTokenAndHandleExceptions(ImmediatelyAppliedToken token) {
     try {
       token.apply(operandStack);
     } catch (CalculatorException e) {

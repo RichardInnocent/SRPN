@@ -5,11 +5,11 @@ import java.util.Objects;
  * value in its original form, even if this is larger than a primitive {@code int}. We can figure
  * out how to deal with this when computing the values.
  */
-public abstract class OperandToken extends AbstractToken {
+public abstract class OperandToken extends ImmediatelyAppliedToken {
 
   @Override
   public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {
-    operandStack.push((double) truncateDoubleToIntBounds());
+    operandStack.push((double) intValue());
   }
 
   /**
@@ -38,7 +38,7 @@ public abstract class OperandToken extends AbstractToken {
    *   </tr>
    * </table>
    */
-  protected abstract int truncateDoubleToIntBounds();
+  protected abstract int intValue();
 
   /**
    * Flips the sign of the number stored in the token.
