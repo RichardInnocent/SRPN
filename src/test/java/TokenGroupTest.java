@@ -6,9 +6,9 @@ public class TokenGroupTest {
 
   @Test
   public void testAddingTokens() {
-    Token token1 = IntegerToken.forValue(1);
+    Token token1 = OperandToken.forValue(1);
     Token token2 = new ModuloToken();
-    Token token3 = IntegerToken.forValue(65);
+    Token token3 = OperandToken.forValue(65);
 
     TokenGroup group = new TokenGroup();
     group.addAndTidy(token1);
@@ -26,10 +26,10 @@ public class TokenGroupTest {
   public void testAddingNumericTokenAfterPositiveNumericTokenTidiesToSingleToken() {
     TokenGroup group = new TokenGroup();
     group.addAndTidy(new SubtractionToken());
-    group.addAndTidy(IntegerToken.forValue(3));
+    group.addAndTidy(OperandToken.forValue(3));
     assertFalse(group.isEmpty());
     assertEquals(1, group.size());
-    assertEquals(IntegerToken.forValue(-3), group.getToken(0));
+    assertEquals(OperandToken.forValue(-3), group.getToken(0));
   }
 
 }

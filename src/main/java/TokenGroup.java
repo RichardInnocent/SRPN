@@ -7,7 +7,7 @@ public class TokenGroup {
   private final List<Token> tokens = new ArrayList<>();
 
   /**
-   * Adds the token to the list of tokens. If the token is an {@link IntegerToken} and the previous
+   * Adds the token to the list of tokens. If the token is an {@link OperandToken} and the previous
    * token is an {@link SubtractionToken}, these two tokens may be merged into one negative
    * {@code IntegerToken}.
    * @param token The token to add.
@@ -19,7 +19,7 @@ public class TokenGroup {
        * operator. Note that there is a difference in the calculator between -2147483648 and
        * 0-2147483648, the latter being evaluated at -2147483647. */
       tokens.remove(tokens.get(tokens.size()-1));
-      tokens.add(((IntegerToken) token).flipSign());
+      tokens.add(((OperandToken) token).flipSign());
     } else {
       tokens.add(token);
     }
@@ -29,7 +29,7 @@ public class TokenGroup {
    * <p>Determines if the current token is numeric and should have its sign reversed. This occurs if
    * all of the following conditions are met:</p>
    * <ul>
-   *   <li>{@code token} is an {@link IntegerToken}</li>
+   *   <li>{@code token} is an {@link OperandToken}</li>
    *   <li>The previous token is a {@link SubtractionToken}</li>
    *   <li>The token before that is either non-existent (i.e. the {@code SubtractionToken} is at the
    *   start of the group), or is not numeric or another minus sign</li>
@@ -71,7 +71,7 @@ public class TokenGroup {
   }
 
   private boolean isNumeric(Token token) {
-    return token instanceof IntegerToken;
+    return token instanceof OperandToken;
   }
 
   public List<Token> getTokens() {

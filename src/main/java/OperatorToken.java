@@ -1,12 +1,12 @@
 public abstract class OperatorToken extends AbstractToken {
 
   @Override
-  public void apply(SizeRestrictedStack<Integer> operandStack) throws CalculatorException {
+  public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {
     int stackSize = operandStack.size();
     if (stackSize >= 2) {
-      int operand1 = operandStack.get(stackSize-1);
-      int operand2 = operandStack.get(stackSize-2);
-      int result = getOperator().apply(operand2, operand1);
+      double operand1 = operandStack.get(stackSize-1);
+      double operand2 = operandStack.get(stackSize-2);
+      double result = getOperator().apply(operand2, operand1);
 
       // Only pop operands off of the stack if the apply method is successful
       operandStack.pop();

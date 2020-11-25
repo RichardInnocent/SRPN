@@ -26,7 +26,7 @@ import java.math.BigInteger;
  * <p>We could have used this token type to store all of our operands, but it's overkill for most
  * uses of the calculator.</p>
  */
-public class BigIntegerToken extends IntegerToken {
+public class BigOperandToken extends OperandToken {
 
   // No need to initialise these each time
   private static final BigInteger MINUS_ONE = BigInteger.valueOf(-1L);
@@ -38,12 +38,12 @@ public class BigIntegerToken extends IntegerToken {
   private final BigInteger value;
 
   // This exception should never be thrown if the tokenizer calls it appropriately
-  private BigIntegerToken(BigInteger value) throws NumberFormatException {
+  private BigOperandToken(BigInteger value) throws NumberFormatException {
     this.value = value;
   }
 
   @Override
-  protected int truncatedIntValue() {
+  protected int truncateDoubleToIntBounds() {
     if (value.compareTo(UPPER_BOUND) > 0) {
       // If the value is larger than Integer.MAX_VALUE, return Integer.MAX_VALUE
       return UPPER_BOUND.intValue();
@@ -64,10 +64,10 @@ public class BigIntegerToken extends IntegerToken {
    * value longer than 120 characters. This mirrors the behaviour of the calculator.
    */
   @Override
-  public IntegerToken flipSign() throws DummySegmentationFaultException {
+  public OperandToken flipSign() throws DummySegmentationFaultException {
     /* Keep the token itself somewhat immutable - instead return a new one where the value has been
      * multiplied by -1. */
-    return new BigIntegerToken(value.multiply(MINUS_ONE));
+    return new BigOperandToken(value.multiply(MINUS_ONE));
   }
 
   /**
@@ -79,7 +79,7 @@ public class BigIntegerToken extends IntegerToken {
    * fault if the number being parsed is longer than 120 characters. This exception mirrors this
    * behaviour.
    */
-  public static BigIntegerToken forValue(String value)
+  public static BigOperandToken forValue(String value)
       throws NumberFormatException, DummySegmentationFaultException {
     if (value.length() > 120) {
       /* If the value is longer than 120 characters in length (this includes the sign), then the
@@ -92,7 +92,7 @@ public class BigIntegerToken extends IntegerToken {
         new BigInteger(value, 8) : new BigInteger(value);
 
     // If less than 120 characters in length, we know it will fit in a BigInteger so this if safe
-    return new BigIntegerToken(bigIntegerValue);
+    return new BigOperandToken(bigIntegerValue);
   }
 
   @Override

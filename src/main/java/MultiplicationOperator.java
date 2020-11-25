@@ -1,8 +1,8 @@
 public class MultiplicationOperator extends Operator {
 
   @Override
-  public int apply(int operand1, int operand2) {
-    return truncateToBounds(((long) operand1) * ((long) operand2));
+  public double apply(double operand1, double operand2) {
+    return truncateToBounds(operand1 * operand2);
   }
 
   @Override

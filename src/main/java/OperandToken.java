@@ -1,4 +1,3 @@
-import java.math.BigInteger;
 import java.util.Objects;
 
 /**
@@ -6,11 +5,11 @@ import java.util.Objects;
  * value in its original form, even if this is larger than a primitive {@code int}. We can figure
  * out how to deal with this when computing the values.
  */
-public abstract class IntegerToken extends AbstractToken {
+public abstract class OperandToken extends AbstractToken {
 
   @Override
-  public void apply(SizeRestrictedStack<Integer> operandStack) throws CalculatorException {
-    operandStack.push(truncatedIntValue());
+  public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {
+    operandStack.push((double) truncateDoubleToIntBounds());
   }
 
   /**
@@ -39,18 +38,18 @@ public abstract class IntegerToken extends AbstractToken {
    *   </tr>
    * </table>
    */
-  protected abstract int truncatedIntValue();
+  protected abstract int truncateDoubleToIntBounds();
 
   /**
    * Flips the sign of the number stored in the token.
    * @return A new integer token with an absolute value equal that this instance, but with the sign
    * flipped.
    */
-  public abstract IntegerToken flipSign();
+  public abstract OperandToken flipSign();
 
   /**
    * Creates an integer token from the given string. Note that the result can either be a
-   * {@link SmallIntegerToken} or a {@link BigIntegerToken}. The former is used if the original
+   * {@link SmallOperandToken} or a {@link BigOperandToken}. The former is used if the original
    * value sits comfortably within a primitive {@code int} type. The latter is used when this is not
    * the case, but we want to preserve the original value that the user inputted.
    * @param value The integer represented as text.
@@ -59,15 +58,15 @@ public abstract class IntegerToken extends AbstractToken {
    * @throws DummySegmentationFaultException Thrown if {@code value.length() > 120} - this causes
    * the calculator to throw a segmentation fault so we should mirror this behaviour.
    */
-  public static IntegerToken forValue(String value)
+  public static OperandToken forValue(String value)
       throws NumberFormatException, DummySegmentationFaultException {
     try {
-      return SmallIntegerToken.forValue(value);
+      return SmallOperandToken.forValue(value);
     } catch (NumberFormatException e) {
       /* A NumberFormatException is thrown from the SmallIntegerToken.forValue(String) method if the
        * value is too large to be stored in an integer. If that exception is thrown, we should
        * instead try to store it in a BigInteger. */
-      return BigIntegerToken.forValue(value);
+      return BigOperandToken.forValue(value);
     }
   }
 
@@ -76,8 +75,8 @@ public abstract class IntegerToken extends AbstractToken {
    * @param value The value.
    * @return An integer token.
    */
-  public static SmallIntegerToken forValue(int value) {
-    return SmallIntegerToken.forValue(value);
+  public static SmallOperandToken forValue(int value) {
+    return SmallOperandToken.forValue(value);
   }
 
   @Override
@@ -91,11 +90,11 @@ public abstract class IntegerToken extends AbstractToken {
       return true;
     }
 
-    if (!(other instanceof IntegerToken)) {
+    if (!(other instanceof OperandToken)) {
       return false;
     }
 
-    IntegerToken that = (IntegerToken) other;
+    OperandToken that = (OperandToken) other;
 
     // Equal if the text representation of the numbers is identical. Therefore, something like
     // BigIntegerToken.forValue("12345").equals(SmallIntegerToken.forValue("12345")

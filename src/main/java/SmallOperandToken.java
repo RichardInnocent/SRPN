@@ -1,30 +1,30 @@
-public class SmallIntegerToken extends IntegerToken {
+public class SmallOperandToken extends OperandToken {
 
   private final int value;
 
-  private SmallIntegerToken(int value) {
+  private SmallOperandToken(int value) {
     this.value = value;
   }
 
   @Override
-  protected int truncatedIntValue() {
+  protected int truncateDoubleToIntBounds() {
     return value;
   }
 
   @Override
-  public IntegerToken flipSign() {
+  public OperandToken flipSign() {
     if (value == Integer.MIN_VALUE) {
       // Remove the sign
-      return BigIntegerToken.forValue(Integer.toString(value).substring(1));
+      return BigOperandToken.forValue(Integer.toString(value).substring(1));
     }
-    return new SmallIntegerToken(-value);
+    return new SmallOperandToken(-value);
   }
 
-  public static SmallIntegerToken forValue(int value) {
-    return new SmallIntegerToken(value);
+  public static SmallOperandToken forValue(int value) {
+    return new SmallOperandToken(value);
   }
 
-  public static SmallIntegerToken forValue(String value) {
+  public static SmallOperandToken forValue(String value) {
     if (value.startsWith("0")) {
       return forValue(Integer.parseInt(value, 8));
     }
@@ -44,8 +44,8 @@ public class SmallIntegerToken extends IntegerToken {
     // If the other object is a small integer, we can be a bit more efficient and compare the int
     // value itself. Otherwise, we'll have to use the parent method which allows the comparison
     // between various types of IntegerToken
-    return other instanceof SmallIntegerToken ?
-        this.value == ((SmallIntegerToken) other).value :
+    return other instanceof SmallOperandToken ?
+        this.value == ((SmallOperandToken) other).value :
         super.equals(other);
   }
 

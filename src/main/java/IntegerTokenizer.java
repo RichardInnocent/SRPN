@@ -1,11 +1,11 @@
 /**
  * Tokenizes numbers.
  */
-public class IntegerTokenizer extends MultiCharacterTokenTokenizer<IntegerToken> {
+public class IntegerTokenizer extends MultiCharacterTokenTokenizer<OperandToken> {
 
   /**
-   * Attempts to convert the {@code tokenString} into an {@link IntegerToken}. The
-   * {@link IntegerToken#forValue(String)} factory method should handle strings of all different
+   * Attempts to convert the {@code tokenString} into an {@link OperandToken}. The
+   * {@link OperandToken#forValue(String)} factory method should handle strings of all different
    * lengths.
    * @param tokenString The text to convert.
    * @return A token to represent the operand.
@@ -14,9 +14,9 @@ public class IntegerTokenizer extends MultiCharacterTokenTokenizer<IntegerToken>
    * a quirk with the legacy SRPN that we aim to replicate.
    */
   @Override
-  protected IntegerToken buildToken(String tokenString)
+  protected OperandToken buildToken(String tokenString)
       throws NumberFormatException, DummySegmentationFaultException {
-    return IntegerToken.forValue(tokenString);
+    return OperandToken.forValue(tokenString);
   }
 
   @Override

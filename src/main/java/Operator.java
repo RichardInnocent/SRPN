@@ -1,27 +1,27 @@
 public abstract class Operator {
 
-  private static final int MAX_VALUE = Integer.MAX_VALUE;
-  private static final int MIN_VALUE = Integer.MIN_VALUE;
+  private static final double MAX_VALUE = Integer.MAX_VALUE;
+  private static final double MIN_VALUE = Integer.MIN_VALUE;
 
-  public abstract int apply(int operand1, int operand2);
+  public abstract double apply(double operand1, double operand2);
   public abstract String getReadableName();
 
-  protected final boolean isAboveBound(long value) {
+  protected final boolean isAboveBound(double value) {
     return value > MAX_VALUE;
   }
 
-  protected final boolean isBelowBound(long value) {
+  protected final boolean isBelowBound(double value) {
     return value < MIN_VALUE;
   }
 
-  protected final int truncateToBounds(long value) {
+  protected final double truncateToBounds(double value) {
     if (isAboveBound(value)) {
       return MAX_VALUE;
     }
     if (isBelowBound(value)) {
       return MIN_VALUE;
     }
-    return (int) value;
+    return value;
   }
 
   @Override

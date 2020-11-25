@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class TokenGroupExecutor {
 
-  private final SizeRestrictedStack<Integer> operandStack = new SizeRestrictedStack<>(23);
+  private final SizeRestrictedStack<Double> operandStack = new SizeRestrictedStack<>(23);
 
   public void execute(List<TokenGroup> tokenGroups) {
     tokenGroups.forEach(this::execute);
@@ -77,10 +76,10 @@ public class TokenGroupExecutor {
 //      throw new StackUnderflowException();
     }
 
-    int operand1 = operandStack.get(operand1Index);
-    int operand2 = operandStack.get(operand2Index);
+    double operand1 = operandStack.get(operand1Index);
+    double operand2 = operandStack.get(operand2Index);
 
-    int result = operator.apply(operand1, operand2);
+    double result = operator.apply(operand1, operand2);
     operandStack.setElementAt(result, operand1Index);
     operandStack.removeElementAt(operand2Index);
   }

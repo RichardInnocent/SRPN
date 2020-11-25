@@ -2,9 +2,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class IntegerTokenizerTest {
+public class OperandTokenizerTest {
 
-  private static final Tokenizer<IntegerToken> TOKENIZER = new IntegerTokenizer();
+  private static final Tokenizer<OperandToken> TOKENIZER = new IntegerTokenizer();
 
   @Test
   public void testCanTokenize() {
@@ -14,7 +14,7 @@ public class IntegerTokenizerTest {
   @Test
   public void testBuildToken() {
     String command = "1234+56789";
-    TokenizationResult<IntegerToken> result = TOKENIZER.tokenize(command);
+    TokenizationResult<OperandToken> result = TOKENIZER.tokenize(command);
     assertNotNull(result.getToken());
     assertEquals(command.replace("1234", ""), result.getRemainingCommand());
   }
@@ -22,8 +22,8 @@ public class IntegerTokenizerTest {
   @Test
   public void testBuildTokenWithOverflowingNumber() {
     String value = "12345678901234567890";
-    TokenizationResult<IntegerToken> result = TOKENIZER.tokenize(value);
-    assertEquals(IntegerToken.forValue(value), result.getToken());
+    TokenizationResult<OperandToken> result = TOKENIZER.tokenize(value);
+    assertEquals(OperandToken.forValue(value), result.getToken());
     assertTrue(result.getRemainingCommand().isEmpty());
   }
 

@@ -4,10 +4,10 @@ public class RandomNumberToken extends AbstractToken {
       new SrpnRandomNumberGenerator();
 
   @Override
-  public void apply(SizeRestrictedStack<Integer> operandStack)
+  public void apply(SizeRestrictedStack<Double> operandStack)
       throws StackUnderflowException, StackOverflowException {
     operandStack.doIfNotFull(stack -> {
-      operandStack.push(RANDOM_NUMBER_GENERATOR.nextInt());
+      operandStack.push((double) RANDOM_NUMBER_GENERATOR.nextInt());
     });
   }
 

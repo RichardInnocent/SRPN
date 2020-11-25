@@ -4,14 +4,14 @@
 public class DisplayStackToken extends AbstractToken {
 
   @Override
-  public void apply(SizeRestrictedStack<Integer> operandStack) throws CalculatorException {
+  public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {
     if (operandStack.isEmpty()) {
       /* If the stack is empty, the original calculator displays the lowest value integer for some
        * reason. */
       System.out.println(Integer.MIN_VALUE);
     } else {
       // Print out each element of the stack from first in to last in
-      operandStack.forEach(System.out::println);
+      operandStack.stream().mapToInt(Double::intValue).forEach(System.out::println);
     }
   }
 

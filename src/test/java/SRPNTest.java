@@ -198,7 +198,6 @@ public class SRPNTest extends SystemOutTest {
     srpn.processCommand("1674+457-159*54/421%27 d");
     List<String> printedLines = getAllPrintedLinesAndRefresh();
     assertEquals(1, printedLines.size());
-    // TODO this doesn't work as the operands are stored as integers - they should be doubles
     assertEquals("1594", printedLines.get(0)); // This is the BODMAS answer from a calculator
   }
 

@@ -9,7 +9,7 @@ public class WhitespaceToken extends AbstractToken {
   }
 
   @Override
-  public void apply(SizeRestrictedStack<Integer> operandStack) {}
+  public void apply(SizeRestrictedStack<Double> operandStack) {}
 
   @Override
   public int hashCode() {

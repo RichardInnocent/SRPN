@@ -1,6 +1,6 @@
 public interface Token {
 
-  void apply(SizeRestrictedStack<Integer> operandStack) throws CalculatorException;
+  void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException;
   String getReadableValue();
 
 }

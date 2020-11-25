@@ -1,11 +1,11 @@
 public class DivisionOperator extends Operator {
 
   @Override
-  public int apply(int operand1, int operand2) {
+  public double apply(double operand1, double operand2) {
     if (operand2 == 0) {
       throw new DivideByZeroException();
     }
-    return operand1 / operand2;
+    return truncateToBounds(operand1 / operand2); // TODO test operand2 < 1
   }
 
   @Override

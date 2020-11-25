@@ -62,7 +62,7 @@ public class OperatorTest {
   private static Operator createOperatorWithReadableName(String readableName) {
     return new Operator() {
       @Override
-      public int apply(int operand1, int operand2) {
+      public double apply(double operand1, double operand2) {
         return 0;
       }
 

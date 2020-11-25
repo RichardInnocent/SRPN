@@ -96,7 +96,7 @@ public class MultiCharacterTokenTokenizerTest {
     }
 
     @Override
-    public void apply(SizeRestrictedStack<Integer> operandStack) throws CalculatorException {}
+    public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {}
 
     public String getValue() {
       return value;

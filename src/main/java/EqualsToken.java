@@ -9,13 +9,13 @@ public class EqualsToken extends AbstractToken {
    * @param operandStack The operand stack.
    */
   @Override
-  public void apply(SizeRestrictedStack<Integer> operandStack) {
+  public void apply(SizeRestrictedStack<Double> operandStack) {
     if (operandStack.isEmpty()) {
       // Stack is empty so print this to the terminal
       System.out.println("Stack empty.");
     } else {
       // Show the most recently added number on the stack
-      System.out.println(operandStack.peek());
+      System.out.println(operandStack.peek().intValue());
     }
   }
 
