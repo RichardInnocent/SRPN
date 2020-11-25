@@ -72,10 +72,7 @@ public class TokenGroupExecutor {
     int operand2Index = operand1Index + 1;
 
     if (operand1Index < 0) {
-      System.out.println("Stack underflow.");
-      return;
-      // TODO
-//      throw new StackUnderflowException();
+      throw new StackUnderflowException();
     }
 
     double operand1 = operandStack.get(operand1Index);
