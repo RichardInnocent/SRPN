@@ -213,9 +213,17 @@ public class SRPNTest extends SystemOutTest {
   @Test
   public void testSequenceOfNumbersThenOperators2() {
     srpn.processCommand("457 159 54 448 -/* d");
-    List<String> printedLined = getAllPrintedLinesAndRefresh();
-    assertEquals(1, printedLined.size());
-    assertEquals("72607", printedLined.get(0));
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLines.size());
+    assertEquals("72607", printedLines.get(0));
+  }
+
+  @Test
+  public void testStrangeExample() {
+    srpn.processCommand("10 5 --20 d");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLines.size());
+    assertEquals("25", printedLines.get(0));
   }
 
   @Test

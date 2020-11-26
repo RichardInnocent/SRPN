@@ -6,24 +6,12 @@ public class RaiseToPowerOperator extends Operator {
       throw new NegativePowerException();
     }
 
-    if (operand1 == 0 || operand1 == 1) {
-      return operand1;
-    }
-
-    if (operand1 == -1) {
-      return operand2 % 2 == 0 ? 1 : -1;
-    }
-
-    if (operand2 == 1) {
-      return operand1;
-    }
-
     /* Can't blindly use Math.pow here as the result could overflow. However,
      * Math.pow(Integer.MIN_INT, 2) won't overflow a long, although for any powers greater than
      * this, we can't be sure so we'll have to calculate it differently. */
     return operand2 < 3 ?
         raiseToPowerLessThan3(operand1, operand2) :
-        raiseToPowerGreaterThanOrEqualTo2(operand1, operand2);
+        raiseToPowerGreaterThanOrEqualTo3(operand1, operand2);
   }
 
   private double raiseToPowerLessThan3(double operand1, double operand2) {
@@ -32,17 +20,13 @@ public class RaiseToPowerOperator extends Operator {
     return truncateToBounds(Math.pow(operand1, operand2));
   }
 
-  private double raiseToPowerGreaterThanOrEqualTo2(double operand1, double operand2) {
+  private double raiseToPowerGreaterThanOrEqualTo3(double operand1, double operand2) {
     /* We've already handled the case where operand1 == 1 and 0, so abs(operand1) >= 2.
      * Therefore, if the power is greater than or equal to 31, we know that our result will overflow
      * We need this check here as even BigIntegers aren't capable of storing anything like
      * Integer.MAX_VALUE ^ Integer.MAX_VALUE so we'd get an arithmetic exception. */
-    if (operand2 >= 31) {
-      if (operand1 > 0d) {
+    if (operand1 >= 2 && operand2 >= 31) {
         return Integer.MAX_VALUE;
-      } else {
-        return operand2 % 2 == 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-      }
     }
 
     // Should be safe to use doubles here as Integer.MAX_VALUE ^ 31 can be stored in a double
