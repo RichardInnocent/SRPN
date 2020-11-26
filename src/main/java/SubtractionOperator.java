@@ -9,4 +9,9 @@ public class SubtractionOperator extends Operator {
   public String getReadableName() {
     return "-";
   }
+
+  @Override
+  public int getPrecedence() {
+    return OperatorPrecedence.SUBTRACTION;
+  }
 }

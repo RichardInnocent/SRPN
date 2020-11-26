@@ -1,7 +1,7 @@
 /**
  * Token for when the user requests to view the contents of the stack.
  */
-public class DisplayStackToken extends ImmediatelyAppliedToken {
+public class DisplayStackToken extends AbstractToken {
 
   @Override
   public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {

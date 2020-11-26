@@ -9,7 +9,7 @@ public class SRPNTest extends SystemOutTest {
   private final SRPN srpn = new SRPN();
 
   @Test
-  public void testAdditionOverMultipleLines() {
+  public void testAddAdditionOverMultipleLines() {
     srpn.processCommand("10");
     srpn.processCommand("2");
     srpn.processCommand("+");
@@ -224,6 +224,39 @@ public class SRPNTest extends SystemOutTest {
     List<String> printedLines = getAllPrintedLinesAndRefresh();
     assertEquals(1, printedLines.size());
     assertEquals("25", printedLines.get(0));
+  }
+
+  @Test
+  public void testStrangeExample2() {
+    srpn.processCommand("10 5 ++20 d");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLines.size());
+    assertEquals("35", printedLines.get(0));
+  }
+
+  @Test
+  public void testStrangeExample3() {
+    srpn.processCommand("10 5 +-20 d");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLines.size());
+    assertEquals("35", printedLines.get(0));
+  }
+
+  @Test
+  public void testStrangeExample4() {
+    srpn.processCommand("4^2-8--12 d");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLines.size());
+    assertEquals("-4", printedLines.get(0));
+  }
+
+  @Test
+  public void testStrangeExample5() {
+    srpn.processCommand("12 --8-4 d");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(2, printedLines.size());
+    assertEquals("Stack underflow.", printedLines.get(0));
+    assertEquals("8", printedLines.get(1));
   }
 
   @Test

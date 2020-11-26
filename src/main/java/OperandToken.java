@@ -5,7 +5,7 @@ import java.util.Objects;
  * value in its original form, even if this is larger than a primitive {@code int}. We can figure
  * out how to deal with this when computing the values.
  */
-public abstract class OperandToken extends ImmediatelyAppliedToken {
+public abstract class OperandToken extends AbstractToken {
 
   @Override
   public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {

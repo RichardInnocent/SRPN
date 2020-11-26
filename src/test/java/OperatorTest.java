@@ -67,6 +67,11 @@ public class OperatorTest {
       }
 
       @Override
+      public int getPrecedence() {
+        return 0;
+      }
+
+      @Override
       public String getReadableName() {
         return readableName;
       }

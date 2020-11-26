@@ -9,4 +9,9 @@ public class MultiplicationOperator extends Operator {
   public String getReadableName() {
     return "*";
   }
+
+  @Override
+  public int getPrecedence() {
+    return OperatorPrecedence.MULTIPLICATION;
+  }
 }

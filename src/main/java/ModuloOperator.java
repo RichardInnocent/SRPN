@@ -12,4 +12,9 @@ public class ModuloOperator extends Operator {
   public String getReadableName() {
     return "%";
   }
+
+  @Override
+  public int getPrecedence() {
+    return OperatorPrecedence.MODULO;
+  }
 }

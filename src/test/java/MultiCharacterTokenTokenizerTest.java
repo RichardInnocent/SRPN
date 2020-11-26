@@ -100,6 +100,9 @@ public class MultiCharacterTokenTokenizerTest {
     }
 
     @Override
+    public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {}
+
+    @Override
     public String getReadableValue() {
       return "dummy";
     }

@@ -38,4 +38,9 @@ public class RaiseToPowerOperator extends Operator {
   public String getReadableName() {
     return "^";
   }
+
+  @Override
+  public int getPrecedence() {
+    return OperatorPrecedence.RAISE_TO_POWER;
+  }
 }

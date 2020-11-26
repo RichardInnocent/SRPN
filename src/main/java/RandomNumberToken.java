@@ -1,4 +1,4 @@
-public class RandomNumberToken extends ImmediatelyAppliedToken {
+public class RandomNumberToken extends AbstractToken {
 
   private static final SrpnRandomNumberGenerator RANDOM_NUMBER_GENERATOR =
       new SrpnRandomNumberGenerator();

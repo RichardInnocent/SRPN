@@ -9,6 +9,9 @@ public class WhitespaceToken extends AbstractToken {
   }
 
   @Override
+  public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {}
+
+  @Override
   public int hashCode() {
     return getReadableValue().hashCode();
   }

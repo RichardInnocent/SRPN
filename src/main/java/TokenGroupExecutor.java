@@ -1,5 +1,6 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Stack;
 
 public class TokenGroupExecutor {
 
@@ -11,21 +12,42 @@ public class TokenGroupExecutor {
 
   public void execute(TokenGroup tokenGroup) throws IllegalArgumentException {
     List<Token> tokens = tokenGroup.getTokens();
-    List<OperatorToken> operatorTokens = new ArrayList<>();
-    for (Token token : tokens) {
+    Stack<OperatorToken> operatorTokens = new Stack<>();
+
+    for (int i = 0; i < tokens.size(); i++) {
+      Token token = tokens.get(i);
       if (token instanceof OperatorToken) {
-        operatorTokens.add((OperatorToken) token);
-      } else if (token instanceof ImmediatelyAppliedToken) {
-        applyTokenAndHandleExceptions((ImmediatelyAppliedToken) token);
+        OperatorToken operatorToken = (OperatorToken) token;
+
+        int numOperators = operatorTokens.size();
+        if (numOperators > 0 && operatorToken.compareTo(operatorTokens.peek()) > 0) {
+          flushOperators(operatorTokens);
+
+          Optional<OperandToken> consecutivelyNextOperandToken = getOperandTokenAtIndex(i+1, tokens);
+          if (consecutivelyNextOperandToken.isPresent()) {
+            consecutivelyNextOperandToken.get().apply(operandStack);
+            i++; // Skip the next value as it's already been added
+          }
+        }
+        operatorTokens.push(operatorToken);
+
       } else {
-        throw new IllegalArgumentException("Illegal token argument of type " + token.getClass());
+        applyTokenAndHandleExceptions(token);
       }
     }
 
-    applyOperators(operatorTokens);
+    flushOperators(operatorTokens);
   }
 
-  private void applyTokenAndHandleExceptions(ImmediatelyAppliedToken token) {
+  private Optional<OperandToken> getOperandTokenAtIndex(int index, List<Token> tokens) {
+    if (index >= tokens.size()) {
+      return Optional.empty();
+    }
+    Token token = tokens.get(index);
+    return token instanceof OperandToken ? Optional.of((OperandToken) token) : Optional.empty();
+  }
+
+  private void applyTokenAndHandleExceptions(Token token) {
     try {
       token.apply(operandStack);
     } catch (CalculatorException e) {
@@ -35,52 +57,18 @@ public class TokenGroupExecutor {
     }
   }
 
-  private void applyOperators(List<OperatorToken> operatorTokens) {
-    applyAndRemoveTokensOfType(RaiseToPowerToken.class, operatorTokens);
-    applyAndRemoveTokensOfType(ModuloToken.class, operatorTokens);
-    applyAndRemoveTokensOfType(DivisionToken.class, operatorTokens);
-    applyAndRemoveTokensOfType(MultiplicationToken.class, operatorTokens);
-    applyAndRemoveTokensOfType(AdditionToken.class, operatorTokens);
-    applyAndRemoveTokensOfType(SubtractionToken.class, operatorTokens);
-  }
+  private void flushOperators(Stack<OperatorToken> operatorTokens) {
+    if (operatorTokens.isEmpty()) {
+      return;
+    }
 
-  private void applyAndRemoveTokensOfType(
-      Class<? extends OperatorToken> tokenType, List<OperatorToken> operatorTokens) {
-    int currentTokenIndex = 0;
-    while (currentTokenIndex < operatorTokens.size()) {
-      OperatorToken token = operatorTokens.get(currentTokenIndex);
-      if (token.getClass().equals(tokenType)) {
-        applyOperator(token.getOperator(), operatorTokens.size() - currentTokenIndex - 1);
-        operatorTokens.remove(currentTokenIndex);
-      } else {
-        currentTokenIndex++;
+    while (!operatorTokens.isEmpty()) {
+      try {
+        operatorTokens.pop().apply(operandStack);
+      } catch (CalculatorException e) {
+        System.out.println(e.getMessage());
       }
     }
-  }
-
-  private void applyOperator(Operator operator, int indexFromEnd) {
-    try {
-      applyOperatorAndThrowExceptions(operator, indexFromEnd);
-    } catch (CalculatorException e) {
-      System.out.println(e.getMessage());
-    }
-  }
-
-  private void applyOperatorAndThrowExceptions(Operator operator, int indexFromEnd)
-      throws CalculatorException {
-    int operand1Index = operandStack.size() - indexFromEnd - 2;
-    int operand2Index = operand1Index + 1;
-
-    if (operand1Index < 0) {
-      throw new StackUnderflowException();
-    }
-
-    double operand1 = operandStack.get(operand1Index);
-    double operand2 = operandStack.get(operand2Index);
-
-    double result = operator.apply(operand1, operand2);
-    operandStack.setElementAt(result, operand1Index);
-    operandStack.removeElementAt(operand2Index);
   }
 
 }

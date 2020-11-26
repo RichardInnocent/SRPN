@@ -28,4 +28,8 @@ public class DivisionOperator extends Operator {
     return "/";
   }
 
+  @Override
+  public int getPrecedence() {
+    return OperatorPrecedence.DIVISION;
+  }
 }

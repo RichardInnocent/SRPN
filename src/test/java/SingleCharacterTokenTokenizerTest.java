@@ -75,6 +75,9 @@ public class SingleCharacterTokenTokenizerTest {
       this.value = value;
     }
 
+    @Override
+    public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {}
+
     public char getValue() {
       return value;
     }

@@ -21,4 +21,9 @@ public class AdditionOperator extends Operator {
   public String getReadableName() {
     return "+";
   }
+
+  @Override
+  public int getPrecedence() {
+    return OperatorPrecedence.ADDITION;
+  }
 }
