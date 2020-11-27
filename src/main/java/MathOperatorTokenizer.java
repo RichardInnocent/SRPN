@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -23,17 +24,9 @@ public class MathOperatorTokenizer extends SingleCharacterTokenTokenizer<Operato
   }
 
   @Override
-  protected OperatorToken buildToken(char character) {
+  protected Optional<OperatorToken> buildToken(char character) {
     Supplier<? extends OperatorToken> supplier = tokenSuppliers.get(character);
-    if (supplier == null) {
-      throw new TokenizationException("No supplier found for character " + character);
-    }
-    // Build the token from the supplier
-    return supplier.get();
+    return supplier == null ? Optional.empty() : Optional.of(supplier.get());
   }
 
-  @Override
-  public boolean canTokenize(char character) {
-    return tokenSuppliers.containsKey(character);
-  }
 }

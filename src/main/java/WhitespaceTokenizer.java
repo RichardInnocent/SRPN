@@ -1,15 +1,25 @@
 /**
  * Tokenizes whitespace.
  */
-public class WhitespaceTokenizer extends MultiCharacterTokenTokenizer<WhitespaceToken> {
+public class WhitespaceTokenizer extends AbstractTokenizer {
 
   @Override
-  protected WhitespaceToken buildToken(String tokenString) throws NumberFormatException {
-    return new WhitespaceToken();
-  }
+  protected ExecutionState attemptTokenizationAndThrowExceptions(
+      TokenizationResultBuilder resultBuilder) {
+    String unprocessedCommand = resultBuilder.getUnprocessedCommand();
 
-  @Override
-  public boolean canTokenize(char character) {
-    return Character.isWhitespace(character);
+    int processedCharacters = 0;
+    while (processedCharacters < unprocessedCommand.length() &&
+        Character.isWhitespace(unprocessedCommand.charAt(processedCharacters))) {
+      processedCharacters++;
+    }
+
+    if (processedCharacters > 0) {
+      resultBuilder.addToken(new WhitespaceToken());
+      resultBuilder.incrementCurrentIndexBy(processedCharacters);
+      return ExecutionState.SUCCEEDED;
+    }
+    return ExecutionState.FAILED;
   }
+  
 }

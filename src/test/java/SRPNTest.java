@@ -260,6 +260,30 @@ public class SRPNTest extends SystemOutTest {
   }
 
   @Test
+  public void testStrangeExample6() {
+    srpn.processCommand("10 +-1 d");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLines.size());
+    assertEquals("9", printedLines.get(0));
+  }
+
+  @Test
+  public void testStrangeExample7() {
+    srpn.processCommand("4 8 --16 d");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLines.size());
+    assertEquals("12", printedLines.get(0));
+  }
+
+  @Test
+  public void testStrangeExample8() {
+    srpn.processCommand("4 8 ---16 d");
+    List<String> printedLines = getAllPrintedLinesAndRefresh();
+    assertEquals(1, printedLines.size());
+    assertEquals("-20", printedLines.get(0));
+  }
+
+  @Test
   public void testTooManyOperatorsInASingleGroup1() {
     srpn.processCommand("3 12-3/ d");
     List<String> printedLines = getAllPrintedLinesAndRefresh();
