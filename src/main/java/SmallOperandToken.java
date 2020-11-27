@@ -1,4 +1,4 @@
-public class SmallOperandToken extends OperandToken {
+public final class SmallOperandToken extends OperandToken {
 
   private final int value;
 
@@ -24,8 +24,7 @@ public class SmallOperandToken extends OperandToken {
     return new SmallOperandToken(value);
   }
 
-  public static SmallOperandToken forValue(String value) {
-    int radix = value.startsWith("0") ? 8 : 10;
+  public static SmallOperandToken forValue(String value, int radix) {
     return forValue(Integer.parseInt(value, radix));
   }
 

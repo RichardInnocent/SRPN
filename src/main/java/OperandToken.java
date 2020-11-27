@@ -1,9 +1,13 @@
 import java.util.Objects;
 
 /**
- * Represents an integer operand token. As the calculator should not overflow, we have to store the
- * value in its original form, even if this is larger than a primitive {@code int}. We can figure
- * out how to deal with this when computing the values.
+ * <p>Represents an integer operand token. While the operands are stored on the stack as floating point
+ * numbers, at the point of insertion (and thus tokenization), they must be integers. Operand tokens
+ * therefore store the inserted operand as an integer, ready to be added to the stack.</p>
+ *
+ * <p>As the calculator should not overflow, we have to store the value in its original form, even
+ * if this is larger than a primitive {@code int}. We can figure out how to deal with this when
+ * computing the values.</p>
  */
 public abstract class OperandToken extends AbstractToken {
 
@@ -13,8 +17,8 @@ public abstract class OperandToken extends AbstractToken {
   }
 
   /**
-   * Gets the long value of the token. This result will be capped at the bounds of an integer, as
-   * shown below:
+   * Gets the int value of the token. This result will be capped at the bounds of an integer,
+   * saturating rather than overflowing. See the table below for examples.
    * <table>
    *   <tr>
    *     <th>Original value</th>
@@ -48,10 +52,12 @@ public abstract class OperandToken extends AbstractToken {
   public abstract OperandToken flipSign();
 
   /**
-   * Creates an integer token from the given string. Note that the result can either be a
+   * <p>Creates an integer token from the given string. Note that the result can either be a
    * {@link SmallOperandToken} or a {@link BigOperandToken}. The former is used if the original
    * value sits comfortably within a primitive {@code int} type. The latter is used when this is not
-   * the case, but we want to preserve the original value that the user inputted.
+   * the case, but we want to preserve the original value that the user inputted.</p>
+   *
+   * <p>Note that the input will be interpreted as octal if {@code value} starts with 0.</p>
    * @param value The integer represented as text.
    * @return An integer token.
    * @throws NumberFormatException Thrown if {@code value} is not a valid integer.
@@ -60,13 +66,15 @@ public abstract class OperandToken extends AbstractToken {
    */
   public static OperandToken forValue(String value)
       throws NumberFormatException, DummySegmentationFaultException {
+    // Base 8 is used if the value starts with a 0, otherwise use base 10
+    int radix = value.startsWith("0") ? 8 : 10;
     try {
-      return SmallOperandToken.forValue(value);
+      return SmallOperandToken.forValue(value, radix);
     } catch (NumberFormatException e) {
       /* A NumberFormatException is thrown from the SmallIntegerToken.forValue(String) method if the
        * value is too large to be stored in an integer. If that exception is thrown, we should
        * instead try to store it in a BigInteger. */
-      return BigOperandToken.forValue(value);
+      return BigOperandToken.forValue(value, radix);
     }
   }
 

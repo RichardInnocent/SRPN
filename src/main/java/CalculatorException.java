@@ -1,6 +1,6 @@
 /**
  * A calculator exception represents a failed operation, but one that was handled successfully by
- * the original SRPN.
+ * the original SRPN and didn't cause the program to crash.
  */
 public abstract class CalculatorException extends RuntimeException {
 

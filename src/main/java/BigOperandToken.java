@@ -3,8 +3,8 @@ import java.math.BigInteger;
 /**
  * <p>When inserting numbers on the SRPN, it's possible to insert very large numbers without the
  * calculator crashing. Instead, these are typically treated as {@link Integer#MAX_VALUE} or
- * {@link Integer#MIN_VALUE}. However, due to our tokenization process, typing something like this:
- * {@code -12345678901234567890} actually resolved to two separate tokens:</p>
+ * {@link Integer#MIN_VALUE}. However, due to our tokenization process, typing something like
+ * {@code -12345678901234567890} would actually resolve to two separate tokens:</p>
  *
  * <ul>
  *   <li>A {@link SubtractionToken} (for the "{@code -}")</li>
@@ -12,21 +12,21 @@ import java.math.BigInteger;
  * </ul>
  *
  * <p>This is potentially problematic if we were to store everything as an integer while handling
- * saturation. For example, if we assumed that the integer token in the above example was to be
+ * saturation. For example, if we assumed that the operand token in the above example was to be
  * stored in a token using an {@code int} internally, we'd have to handle its overflow by setting
  * its value to {@link Integer#MAX_VALUE}. When we grouped that together with the
  * {@link SubtractionToken}, we'd end up with the number {@code -2147483647}. However, that's not
  * how the original SRPN would handle this case. Instead, the SRPN would interpret the minus sign
- * first, and report the value as {@code -2147483648} (i.e. {@link Integer#MIN_VALUE}.</p>
+ * first, and report the value as {@code -2147483648} (i.e. {@link Integer#MIN_VALUE}).</p>
  *
  * <p>To avoid this issue, for any values larger than {@link Integer#MAX_VALUE}, we will instead
  * preserve their original value by storing them internally as a {@link BigInteger}. We can then
- * handle the overflowing later when we interact with it.</p>
+ * handle the overflowing later when we interact with the token.</p>
  *
  * <p>We could have used this token type to store all of our operands, but it's overkill for most
  * uses of the calculator.</p>
  */
-public class BigOperandToken extends OperandToken {
+public final class BigOperandToken extends OperandToken {
 
   // No need to initialise these each time
   private static final BigInteger MINUS_ONE = BigInteger.valueOf(-1L);
@@ -53,7 +53,7 @@ public class BigOperandToken extends OperandToken {
       return LOWER_BOUND.intValue();
     }
 
-    // The value is in the range of an int so return its value.
+    // The value is in the range of an int so return its value directly
     return value.intValue();
   }
 
@@ -65,7 +65,7 @@ public class BigOperandToken extends OperandToken {
    */
   @Override
   public OperandToken flipSign() throws DummySegmentationFaultException {
-    /* Keep the token itself somewhat immutable - instead return a new one where the value has been
+    /* Keep the token itself immutable - instead return a new one where the value has been
      * multiplied by -1. */
     return new BigOperandToken(value.multiply(MINUS_ONE));
   }
@@ -79,7 +79,7 @@ public class BigOperandToken extends OperandToken {
    * fault if the number being parsed is longer than 120 characters. This exception mirrors this
    * behaviour.
    */
-  public static BigOperandToken forValue(String value)
+  public static BigOperandToken forValue(String value, int radix)
       throws NumberFormatException, DummySegmentationFaultException {
     if (value.length() > 120) {
       /* If the value is longer than 120 characters in length (this includes the sign), then the
@@ -88,8 +88,7 @@ public class BigOperandToken extends OperandToken {
       throw new DummySegmentationFaultException();
     }
 
-    BigInteger bigIntegerValue = value.startsWith("0") ?
-        new BigInteger(value, 8) : new BigInteger(value);
+    BigInteger bigIntegerValue = new BigInteger(value, radix);
 
     // If less than 120 characters in length, we know it will fit in a BigInteger so this if safe
     return new BigOperandToken(bigIntegerValue);
