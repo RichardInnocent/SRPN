@@ -15,8 +15,11 @@ public class CommentTokenizer extends AbstractTokenizer {
         currentIndex += isAtEnd(originalCommand, currentIndex) ? 1 : 2;
         continue;
       }
+
       if (!parsingComment) {
         break;
+      } else {
+        currentIndex++;
       }
     } while (parsingComment && currentIndex < originalCommand.length());
 
