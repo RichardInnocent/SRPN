@@ -18,7 +18,7 @@
  */
 public class GccRandomNumberGenerator {
 
-  // Equivalent to the randtbl
+  // Equivalent to the randtbl - this is modified by the algorithm
   private final int[] randomTable = {
       -1726662223, 379960547, 1735697613, 1040273694, 1313901226, 1627687941, -179304937,
       -2073333483, 1780058412, -1989503057, -615974602, 344556628, 939512070, -1249116260,
@@ -55,7 +55,14 @@ public class GccRandomNumberGenerator {
     /* The C return value is unsigned, while Java's implementation is not. Therefore, if the return
      * value is negative, we have to flip the first bit which indicates the sign. To do this, we
      * can just AND it with a binary number consisting of all 1s except for the first bit. */
-    return returnValue & 0x7fffffff;
+    return unsign(returnValue);
+  }
+
+  private int unsign(int value) {
+    /* The C return value is unsigned, while Java's implementation is not. Therefore, if the return
+     * value is negative, we have to flip the first bit which indicates the sign. To do this, we
+     * can just AND it with a binary number consisting of all 1s except for the first bit. */
+    return value & 0x7fffffff;
   }
 
 }

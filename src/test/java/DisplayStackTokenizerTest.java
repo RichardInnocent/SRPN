@@ -9,14 +9,12 @@ public class DisplayStackTokenizerTest {
 
   @Test
   public void testBuildValidToken() {
-    Optional<DisplayStackToken> token = tokenizer.buildToken('d');
-    assertTrue(token.isPresent());
+    assertTrue(tokenizer.buildToken('d').isPresent());
   }
 
   @Test
   public void testBuildInvalidToken() {
-    Optional<DisplayStackToken> token = tokenizer.buildToken('D');
-    assertFalse(token.isPresent());
+    assertFalse(tokenizer.buildToken('D').isPresent());
   }
 
 }

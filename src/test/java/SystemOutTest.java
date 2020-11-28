@@ -1,3 +1,5 @@
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -36,10 +38,8 @@ public class SystemOutTest {
 
   protected String getLatestPrintedContent() {
     List<String> lines = getAllPrintedLinesAndRefresh();
-    if (!lines.isEmpty()) {
-      return removeTrailingNewLine(lines.get(lines.size()-1));
-    }
-    return null; // No content has been printed
+    assertEquals(1, lines.size());
+    return removeTrailingNewLine(lines.get(0));
   }
 
   protected String removeTrailingNewLine(String input) {
