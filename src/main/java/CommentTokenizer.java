@@ -21,7 +21,7 @@ public class CommentTokenizer extends AbstractTokenizer {
       } else {
         currentIndex++;
       }
-    } while (parsingComment && currentIndex < originalCommand.length());
+    } while (currentIndex < originalCommand.length());
 
     // If the index didn't increase then we didn't process a comment
     if (currentIndex == resultBuilder.getCurrentIndex()) {
