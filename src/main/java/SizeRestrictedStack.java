@@ -101,7 +101,7 @@ public class SizeRestrictedStack<E> extends Stack<E> {
     throw new UnsupportedOperationException("Size is fixed at initialisation");
   }
 
-  public void doIfNotFull(Consumer<SizeRestrictedStack<E>> action) {
+  public void doIfNotFullOrThrowException(Consumer<SizeRestrictedStack<E>> action) {
     if (atMaximumCapacity()) {
       throw new StackOverflowException();
     }

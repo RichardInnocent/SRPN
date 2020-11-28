@@ -5,7 +5,7 @@ public class RandomNumberToken extends AbstractToken {
 
   @Override
   public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {
-    operandStack.doIfNotFull(
+    operandStack.doIfNotFullOrThrowException(
         stack -> operandStack.push((double) RANDOM_NUMBER_GENERATOR.nextInt())
     );
   }
