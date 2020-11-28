@@ -13,16 +13,18 @@ import java.util.List;
  */
 public class InputLineTokenizer {
 
-  /* The tokenizers that we can use to turn the characters into tokens. This allows relatively easy
-   * expansion in future - if there's a new command character that's added, we can just add the
-   * tokenizer to this list. */
+  /* The tokenizers that we can use to turn the characters into tokens. These tokenizers run in
+   * order on each potentially-tokenizable part of the command. This is a chain-of-command (esque)
+   * pattern where we order tokenizers using a collection rather than a reference to the next link.
+   * This allows relatively easy expansion in future - if there's a new command character that's
+   * added, we can just add the tokenizer to this list. */
   private final List<Tokenizer> tokenizers = Arrays.asList(
       // Parses comments. This needs to go first so we can ignore everything in a comment
       new CommentTokenizer(),
       new OperandTokenizer(),       // Parses operands
       new MathOperatorTokenizer(),  // Parses maths operators, e.g. +-/*%^
       new RandomNumberTokenizer(),  // Parses random numbers, i.e. 'r'
-      new DisplayStackTokenizer(),   // Parses the display stack command, i.e. 'd'
+      new DisplayStackTokenizer(),  // Parses the display stack command, i.e. 'd'
       new WhitespaceTokenizer(),    // Parses all whitespace
       new EqualsTokenizer()         // Parses the equals command, i.e. '='
   );
@@ -38,15 +40,22 @@ public class InputLineTokenizer {
       return Collections.emptyList();
     }
 
+    /* The result builder consists of the command and will be updated by the tokenizers as the
+     * command is sequentially converted into tokens */
     TokenizationResultBuilder resultBuilder = new TokenizationResultBuilder(command);
+
+    // While we haven't finished processing the command
     tokenizationLoop: while (!resultBuilder.isComplete()) {
+      // Loop through each tokenizer until we find one that can handle the next part of the command
       for (Tokenizer tokenizer : tokenizers) {
+        // Attempting tokenization will fail if the tokenizer can't handle the next part
         if (tokenizer.attemptTokenization(resultBuilder).succeeded()) {
+          // Tokenization was successful so skip to the next part bit of unparsed command
           continue tokenizationLoop;
         }
       }
 
-      // Couldn't be handled by the tokenizers so must be invalid input
+      // Couldn't be handled by the tokenizers so the next character must be invalid input
       printInvalidCharacterMessage(
           resultBuilder.getOriginalCommand().charAt(resultBuilder.getCurrentIndex())
       );
@@ -57,6 +66,8 @@ public class InputLineTokenizer {
   }
 
   private void printInvalidCharacterMessage(char invalidCharacter) {
+    /* Characters of a size greater than 127 will be printed twice. This is probably a character
+     * encoding issue but this should replicate the behaviour close enough. */
     if (invalidCharacter > 127) {
       System.out.print("Unrecognised operator or operand \"�\".\n".repeat(2));
     } else {
