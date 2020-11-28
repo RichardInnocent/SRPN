@@ -2,6 +2,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Starts the SRPN calculator.
+ */
 public class Main {
 
   /**
