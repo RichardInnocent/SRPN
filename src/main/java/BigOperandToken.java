@@ -66,8 +66,9 @@ public final class BigOperandToken extends OperandToken {
   @Override
   public OperandToken flipSign() throws DummySegmentationFaultException {
     /* Keep the token itself immutable - instead return a new one where the value has been
-     * multiplied by -1. */
-    return new BigOperandToken(value.multiply(MINUS_ONE));
+     * multiplied by -1. We change it to a string so that we can assess its length and throw the
+     * DummySegmentationFaultException if required. */
+    return forValue(value.multiply(MINUS_ONE).toString(), 10);
   }
 
   /**
