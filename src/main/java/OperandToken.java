@@ -52,22 +52,19 @@ public abstract class OperandToken extends AbstractToken {
   public abstract OperandToken flipSign();
 
   /**
-   * <p>Creates an integer token from the given string. Note that the result can either be a
+   * Creates an integer token from the given string. Note that the result can either be a
    * {@link SmallOperandToken} or a {@link BigOperandToken}. The former is used if the original
    * value sits comfortably within a primitive {@code int} type. The latter is used when this is not
-   * the case, but we want to preserve the original value that the user inputted.</p>
-   *
-   * <p>Note that the input will be interpreted as octal if {@code value} starts with 0.</p>
+   * the case, but we want to preserve the original value that the user inputted.
    * @param value The integer represented as text.
+   * @param radix The radix that should be used when creating the number.
    * @return An integer token.
    * @throws NumberFormatException Thrown if {@code value} is not a valid integer.
    * @throws DummySegmentationFaultException Thrown if {@code value.length() > 120} - this causes
    * the calculator to throw a segmentation fault so we should mirror this behaviour.
    */
-  public static OperandToken forValue(String value)
+  public static OperandToken forValue(String value, int radix)
       throws NumberFormatException, DummySegmentationFaultException {
-    // Base 8 is used if the value starts with a 0, otherwise use base 10
-    int radix = value.startsWith("0") ? 8 : 10;
     try {
       return SmallOperandToken.forValue(value, radix);
     } catch (NumberFormatException e) {

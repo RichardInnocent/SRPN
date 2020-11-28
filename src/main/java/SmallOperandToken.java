@@ -15,7 +15,7 @@ public final class SmallOperandToken extends OperandToken {
   public OperandToken flipSign() {
     if (value == Integer.MIN_VALUE) {
       // Remove the sign
-      return BigOperandToken.forValue(Integer.toString(value).substring(1));
+      return BigOperandToken.forValue(Integer.toString(value).substring(1), 10);
     }
     return new SmallOperandToken(-value);
   }

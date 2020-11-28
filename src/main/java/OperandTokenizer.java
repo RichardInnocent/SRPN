@@ -23,9 +23,23 @@ public class OperandTokenizer extends AbstractTokenizer {
       return ExecutionState.FAILED;
     }
 
-    resultBuilder.addToken(OperandToken.forValue(operandText));
+    try {
+      resultBuilder.addToken(OperandToken.forValue(operandText, determineRadix(operandText)));
+    } catch (NumberFormatException e) {
+      /* Number format exception thrown probably because the radix is octal but the user has
+       * included invalid characters (e.g. 8 or 9). In this case, silently consume the exception and
+       * don't add any tokens to the stack. */
+    }
     resultBuilder.incrementCurrentIndexBy(operandText.length());
     return ExecutionState.SUCCEEDED;
+  }
+
+  private int determineRadix(String value) {
+    if (!value.startsWith("0") || value.length() < 2) {
+      return 10;
+    }
+    char nextChar = value.charAt(1);
+    return nextChar == '8' || nextChar == '9' ? 10 : 8;
   }
 
 }

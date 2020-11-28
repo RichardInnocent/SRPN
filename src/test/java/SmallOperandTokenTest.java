@@ -14,18 +14,18 @@ public class SmallOperandTokenTest {
   @Test
   public void testCanGenerateTokenFromText() {
     String value = "12345";
-    OperandToken token = SmallOperandToken.forValue(value);
+    OperandToken token = SmallOperandToken.forValue(value, 10);
     assertEquals(value, token.getReadableValue());
   }
 
   @Test(expected = NumberFormatException.class)
   public void testExceptionThrownIfTextIsNotANumber() {
-    SmallOperandToken.forValue("Clearly not a number");
+    SmallOperandToken.forValue("Clearly not a number", 10);
   }
 
   @Test(expected = NumberFormatException.class)
   public void testExceptionThrownIfValueTooLarge() {
-    SmallOperandToken.forValue("12345678901234567890");
+    SmallOperandToken.forValue("12345678901234567890", 10);
   }
 
   @Test
@@ -49,14 +49,14 @@ public class SmallOperandTokenTest {
   public void testEqualsReturnsTrueIfComparedAgainstAnotherIntegerTokenOfDifferentTypeButSameValue() {
     int value = 4;
     SmallOperandToken token1 = SmallOperandToken.forValue(value);
-    OperandToken token2 = BigOperandToken.forValue(Integer.toString(value));
+    OperandToken token2 = BigOperandToken.forValue(Integer.toString(value), 10);
     assertTrue(token1.equals(token2));
   }
 
   @Test
   public void testEqualsReturnsFalseIfComparedAgainstAnotherIntegerTokenOfDifferentTypeAndValue() {
     SmallOperandToken token1 = SmallOperandToken.forValue(4);
-    OperandToken token2 = BigOperandToken.forValue("5");
+    OperandToken token2 = BigOperandToken.forValue("5", 10);
     assertFalse(token1.equals(token2));
   }
 
@@ -88,7 +88,7 @@ public class SmallOperandTokenTest {
     SmallOperandToken originalToken = SmallOperandToken.forValue(Integer.MIN_VALUE);
     OperandToken flippedToken = originalToken.flipSign();
     assertEquals(
-        BigOperandToken.forValue(Integer.toString(Integer.MIN_VALUE).substring(1)),
+        BigOperandToken.forValue(Integer.toString(Integer.MIN_VALUE).substring(1), 10),
         flippedToken
     );
   }

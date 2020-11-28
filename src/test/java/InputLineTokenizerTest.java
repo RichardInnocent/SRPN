@@ -13,7 +13,7 @@ public class InputLineTokenizerTest {
     String command = "35";
     List<Token> tokens = TOKENIZER.tokenize(command);
     assertEquals(1, tokens.size());
-    assertEquals(OperandToken.forValue(command), tokens.get(0));
+    assertEquals(OperandToken.forValue(command, 10), tokens.get(0));
   }
 
   @Test
@@ -21,7 +21,7 @@ public class InputLineTokenizerTest {
     String command = "1234567890123456789012345678901234567890";
     List<Token> tokens = TOKENIZER.tokenize(command);
     assertEquals(1, tokens.size());
-    assertEquals(OperandToken.forValue(command), tokens.get(0));
+    assertEquals(OperandToken.forValue(command, 10), tokens.get(0));
   }
 
   @Test
@@ -29,7 +29,7 @@ public class InputLineTokenizerTest {
     String command = "9".repeat(120);
     List<Token> tokens = TOKENIZER.tokenize(command);
     assertEquals(1, tokens.size());
-    assertEquals(OperandToken.forValue(command), tokens.get(0));
+    assertEquals(OperandToken.forValue(command, 10), tokens.get(0));
   }
 
   @Test(expected = DummySegmentationFaultException.class)
@@ -128,7 +128,7 @@ public class InputLineTokenizerTest {
     assertEquals(new WhitespaceToken(), tokens.get(9));
     assertEquals(new DisplayStackToken(), tokens.get(10));
     assertEquals(new WhitespaceToken(), tokens.get(11));
-    assertEquals(OperandToken.forValue("12345678901234567890"), tokens.get(12));
+    assertEquals(OperandToken.forValue("12345678901234567890", 10), tokens.get(12));
     assertEquals(new WhitespaceToken(), tokens.get(13));
     assertEquals(new SubtractionToken(), tokens.get(14));
     assertEquals(OperandToken.forValue(656), tokens.get(15));
@@ -151,7 +151,7 @@ public class InputLineTokenizerTest {
     assertEquals(new WhitespaceToken(), tokens.get(9));
     assertEquals(new DisplayStackToken(), tokens.get(10));
     assertEquals(new WhitespaceToken(), tokens.get(11));
-    assertEquals(OperandToken.forValue("12345678901234567890"), tokens.get(12));
+    assertEquals(OperandToken.forValue("12345678901234567890", 10), tokens.get(12));
     assertEquals(new WhitespaceToken(), tokens.get(13));
     assertEquals(new SubtractionToken(), tokens.get(14));
     assertEquals(OperandToken.forValue(656), tokens.get(15));
