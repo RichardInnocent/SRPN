@@ -11,7 +11,7 @@ public class AdditionOperator extends Operator {
    * {@link Integer#MAX_VALUE} or {@link Integer#MIN_VALUE} respectively will be returned instead.
    */
   @Override
-  public double apply(double operand1, double operand2) {
+  public double calculate(double operand1, double operand2) {
     /* Cast to longs before adding in case of an overflow, then truncate the result before casting
      * back to an int if required. */
     return truncateToBounds(operand1 + operand2);

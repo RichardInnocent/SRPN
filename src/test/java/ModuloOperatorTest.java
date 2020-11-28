@@ -11,33 +11,33 @@ public class ModuloOperatorTest {
   public void testBasicModulusOfPositiveNumbers() {
     int value1 = 121;
     int value2 = 15;
-    assertEquals(value1 % value2, OPERATOR.apply(value1, value2), DELTA);
+    assertEquals(value1 % value2, OPERATOR.calculate(value1, value2), DELTA);
   }
 
   @Test
   public void testBasicModulusOfOnePositiveAndOneNegativeNumber() {
     int value1 = 121;
     int value2 = -15;
-    assertEquals(value1 % value2, OPERATOR.apply(value1, value2), DELTA);
+    assertEquals(value1 % value2, OPERATOR.calculate(value1, value2), DELTA);
   }
 
   @Test
   public void testBasicModulusOfOneNegativeAndOnePositiveNumber() {
     int value1 = -121;
     int value2 = 15;
-    assertEquals(value1 % value2, OPERATOR.apply(value1, value2), DELTA);
+    assertEquals(value1 % value2, OPERATOR.calculate(value1, value2), DELTA);
   }
 
   @Test
   public void testBasicModulusOfNegativeNumbers() {
     int value1 = -121;
     int value2 = -15;
-    assertEquals(value1 % value2, OPERATOR.apply(value1, value2), DELTA);
+    assertEquals(value1 % value2, OPERATOR.calculate(value1, value2), DELTA);
   }
 
   @Test
   public void testModulusOfLargePositiveValues() {
-    assertEquals(Integer.MAX_VALUE, OPERATOR.apply(Integer.MAX_VALUE, Integer.MIN_VALUE), DELTA);
+    assertEquals(Integer.MAX_VALUE, OPERATOR.calculate(Integer.MAX_VALUE, Integer.MIN_VALUE), DELTA);
   }
 
 }

@@ -1,7 +1,7 @@
 public class SubtractionOperator extends Operator {
 
   @Override
-  public double apply(double operand1, double operand2) {
+  public double calculate(double operand1, double operand2) {
     return truncateToBounds(operand1 - operand2);
   }
 

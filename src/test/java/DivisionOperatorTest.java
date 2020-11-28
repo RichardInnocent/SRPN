@@ -10,50 +10,50 @@ public class DivisionOperatorTest {
   public void testBasicDivisionOfPositiveNumbers() {
     double value1 = 120d;
     double value2 = 15d;
-    assertEquals(value1 / value2, OPERATOR.apply(value1, value2), 1e-10);
+    assertEquals(value1 / value2, OPERATOR.calculate(value1, value2), 1e-10);
   }
 
   @Test
   public void testBasicDivisionOfOnePositiveAndOneNegativeNumber() {
     double value1 = 120d;
     double value2 = -15d;
-    assertEquals(value1 / value2, OPERATOR.apply(value1, value2), 1e-10);
+    assertEquals(value1 / value2, OPERATOR.calculate(value1, value2), 1e-10);
   }
 
   @Test
   public void testBasicDivisionOfOneNegativeAndOnePositiveNumber() {
     double value1 = -120d;
     double value2 = 15d;
-    assertEquals(value1 / value2, OPERATOR.apply(value1, value2), 1e-10);
+    assertEquals(value1 / value2, OPERATOR.calculate(value1, value2), 1e-10);
   }
 
   @Test
   public void testBasicDivisionOfNegativeNumbers() {
     double value1 = -120d;
     double value2 = -15d;
-    assertEquals(value1 / value2, OPERATOR.apply(value1, value2), 1e-10);
+    assertEquals(value1 / value2, OPERATOR.calculate(value1, value2), 1e-10);
   }
 
   @Test
   public void testDivisionOfLargePositiveValues() {
-    assertEquals(Integer.MAX_VALUE, OPERATOR.apply(Integer.MAX_VALUE, 1), 1e-10);
+    assertEquals(Integer.MAX_VALUE, OPERATOR.calculate(Integer.MAX_VALUE, 1), 1e-10);
   }
 
   @Test
   public void testDivisionOfLargeNegativeValues() {
-    assertEquals(Integer.MIN_VALUE, OPERATOR.apply(Integer.MIN_VALUE, 1), 1e-10);
+    assertEquals(Integer.MIN_VALUE, OPERATOR.calculate(Integer.MIN_VALUE, 1), 1e-10);
   }
 
   @Test
   public void testDivisionOfByVerySmallNumberThatIsNotZero() {
     double numerator = 5;
     double denominator = (double) (Integer.MIN_VALUE+1) / Integer.MIN_VALUE;
-    assertEquals(numerator / denominator, OPERATOR.apply(numerator, denominator), 1e-8);
+    assertEquals(numerator / denominator, OPERATOR.calculate(numerator, denominator), 1e-8);
   }
 
   @Test(expected = DivideByZeroException.class)
   public void testDivisionByVerySmallNumberThatIsClassifiedAsZero() {
-    OPERATOR.apply(5, 1e-11d);
+    OPERATOR.calculate(5, 1e-11d);
   }
 
   @Test

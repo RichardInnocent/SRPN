@@ -14,7 +14,7 @@ public class DivisionOperator extends Operator {
    * @throws DivideByZeroException Thrown if {@code operand2} is {@code 0} (or within 1E-10).
    */
   @Override
-  public double apply(double operand1, double operand2) throws DivideByZeroException {
+  public double calculate(double operand1, double operand2) throws DivideByZeroException {
     // Check that we're not dividing by 0
     verifyNotZero(operand2);
 

@@ -10,7 +10,7 @@ public abstract class OperatorToken extends AbstractToken implements Comparable<
     double operand1 = operandStack.get(operandStack.size() - 2);
     double operand2 = operandStack.get(operandStack.size() - 1);
 
-    double result = getOperator().apply(operand1, operand2);
+    double result = getOperator().calculate(operand1, operand2);
 
     // If this works, we can pop both of the operands off the stack and then push on the result
     operandStack.pop();

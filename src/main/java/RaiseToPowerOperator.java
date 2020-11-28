@@ -1,7 +1,7 @@
 public class RaiseToPowerOperator extends Operator {
 
   @Override
-  public double apply(double operand1, double operand2) {
+  public double calculate(double operand1, double operand2) {
     if (operand2 < 0d) {
       throw new NegativePowerException();
     }

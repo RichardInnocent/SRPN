@@ -4,7 +4,7 @@
 public class MultiplicationOperator extends Operator {
 
   @Override
-  public double apply(double operand1, double operand2) {
+  public double calculate(double operand1, double operand2) {
     /* As long as operand1 and operand2 are within the bounds of an int, this should never overflow
      * a double. Therefore we can calculate the result as normal and then truncate to the bounds of
      * an int after. */

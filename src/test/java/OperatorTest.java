@@ -1,8 +1,13 @@
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
 
 public class OperatorTest {
+
+  private static final double DELTA = 1e-8;
 
   @Test
   public void testIsAboveBound() {
@@ -26,15 +31,15 @@ public class OperatorTest {
   @Test
   public void testTruncateToBounds() {
     Operator operator = createOperatorWithReadableName("Operator");
-    assertEquals(Integer.MIN_VALUE, operator.truncateToBounds(Long.MIN_VALUE));
-    assertEquals(Integer.MIN_VALUE, operator.truncateToBounds(Integer.MIN_VALUE - 1L));
-    assertEquals(Integer.MIN_VALUE, operator.truncateToBounds(Integer.MIN_VALUE));
-    assertEquals(-50, operator.truncateToBounds(-50L));
-    assertEquals(0, operator.truncateToBounds(0L));
-    assertEquals(50, operator.truncateToBounds(50L));
-    assertEquals(Integer.MAX_VALUE, operator.truncateToBounds(Integer.MAX_VALUE));
-    assertEquals(Integer.MAX_VALUE, operator.truncateToBounds(Integer.MAX_VALUE + 1L));
-    assertEquals(Integer.MAX_VALUE, operator.truncateToBounds(Long.MAX_VALUE));
+    assertEquals(Integer.MIN_VALUE, operator.truncateToBounds(Long.MIN_VALUE), DELTA);
+    assertEquals(Integer.MIN_VALUE, operator.truncateToBounds(Integer.MIN_VALUE - 1L), DELTA);
+    assertEquals(Integer.MIN_VALUE, operator.truncateToBounds(Integer.MIN_VALUE), DELTA);
+    assertEquals(-50, operator.truncateToBounds(-50L), DELTA);
+    assertEquals(0, operator.truncateToBounds(0L), DELTA);
+    assertEquals(50, operator.truncateToBounds(50L), DELTA);
+    assertEquals(Integer.MAX_VALUE, operator.truncateToBounds(Integer.MAX_VALUE), DELTA);
+    assertEquals(Integer.MAX_VALUE, operator.truncateToBounds(Integer.MAX_VALUE + 1L), DELTA);
+    assertEquals(Integer.MAX_VALUE, operator.truncateToBounds(Long.MAX_VALUE), DELTA);
   }
 
   @Test
@@ -59,10 +64,32 @@ public class OperatorTest {
     assertFalse(operator1a.equals(operator2));
   }
 
+  @Test
+  public void testCompareTo() {
+    Operator highestPrecedence = createOperatorWithPrecedence(2);
+    Operator middlePrecedence = createOperatorWithPrecedence(1);
+    Operator lowestPrecedence = createOperatorWithPrecedence(0);
+
+    assertTrue(highestPrecedence.compareTo(middlePrecedence) < 0);
+    assertTrue(highestPrecedence.compareTo(lowestPrecedence) < 0);
+
+    assertTrue(middlePrecedence.compareTo(highestPrecedence) > 0);
+    assertTrue(middlePrecedence.compareTo(lowestPrecedence) < 0);
+
+    assertTrue(lowestPrecedence.compareTo(highestPrecedence) > 0);
+    assertTrue(lowestPrecedence.compareTo(middlePrecedence) > 0);
+
+    List<Operator> operators = Arrays.asList(lowestPrecedence, middlePrecedence, highestPrecedence);
+    Collections.sort(operators);
+    assertSame(highestPrecedence, operators.get(0));
+    assertSame(middlePrecedence, operators.get(1));
+    assertSame(lowestPrecedence, operators.get(2));
+  }
+
   private static Operator createOperatorWithReadableName(String readableName) {
     return new Operator() {
       @Override
-      public double apply(double operand1, double operand2) {
+      public double calculate(double operand1, double operand2) {
         return 0;
       }
 
@@ -74,6 +101,25 @@ public class OperatorTest {
       @Override
       public String getReadableName() {
         return readableName;
+      }
+    };
+  }
+
+  private static Operator createOperatorWithPrecedence(int precedence) {
+    return new Operator() {
+      @Override
+      public double calculate(double operand1, double operand2) {
+        return 0;
+      }
+
+      @Override
+      public String getReadableName() {
+        return "Precedence " + precedence;
+      }
+
+      @Override
+      public int getPrecedence() {
+        return precedence;
       }
     };
   }

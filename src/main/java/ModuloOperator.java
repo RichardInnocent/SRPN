@@ -4,7 +4,7 @@
 public class ModuloOperator extends Operator {
 
   @Override
-  public double apply(double operand1, double operand2) throws DummyFloatingPointException {
+  public double calculate(double operand1, double operand2) throws DummyFloatingPointException {
     if (Math.abs(operand2) < 1d) {
       /* If operand2 is between -1 and 1, this would cause the legacy SRPN to crash with a floating
        * point exception */

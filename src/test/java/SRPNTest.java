@@ -130,7 +130,7 @@ public class SRPNTest extends SystemOutTest {
       srpn.processCommand("%");
       fail("No exception thrown");
     } catch (DummyFloatingPointException e) {
-      assertEquals("Floating point exception(core dumped)", e.getMessage());
+      assertEquals("Floating point exception (core dumped)", e.getMessage());
     }
   }
 
