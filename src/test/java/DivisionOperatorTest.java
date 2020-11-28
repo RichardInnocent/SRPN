@@ -56,4 +56,14 @@ public class DivisionOperatorTest {
     OPERATOR.apply(5, 1e-11d);
   }
 
+  @Test
+  public void testReadableName() {
+    assertEquals("/", OPERATOR.getReadableName());
+  }
+
+  @Test
+  public void testPrecedence() {
+    assertEquals(OperatorPrecedence.DIVISION, OPERATOR.getPrecedence());
+  }
+
 }
