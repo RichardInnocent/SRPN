@@ -26,6 +26,8 @@ public class MathOperatorTokenizer extends SingleCharacterTokenTokenizer<Operato
   @Override
   protected Optional<OperatorToken> buildToken(char character) {
     Supplier<? extends OperatorToken> supplier = tokenSuppliers.get(character);
+    /* If a supplier for this character couldn't be found, it can't be tokenized. Otherwise, return
+     * the appropriate token from the supplier. */
     return supplier == null ? Optional.empty() : Optional.of(supplier.get());
   }
 
