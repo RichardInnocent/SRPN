@@ -1,11 +1,17 @@
+/**
+ * Operator responsible for determining the modulus of one operand by another.
+ */
 public class ModuloOperator extends Operator {
 
   @Override
   public double apply(double operand1, double operand2) throws DummyFloatingPointException {
-    if (operand2 < 1d && operand2 > -1d) {
+    if (Math.abs(operand2) < 1d) {
+      /* If operand2 is between -1 and 1, this would cause the legacy SRPN to crash with a floating
+       * point exception */
       throw new DummyFloatingPointException();
     }
-    return operand1 % operand2;
+    // Evaluate the result and truncate to the bounds of an integer
+    return truncateToBounds(operand1 % operand2);
   }
 
   @Override

@@ -9,7 +9,7 @@ public class DummyFloatingPointException extends RuntimeException {
    * SRPN that would cause program termination.
    */
   public DummyFloatingPointException() {
-    super("Floating point exception(core dumped)");
+    super("Floating point exception (core dumped)");
   }
 
 }

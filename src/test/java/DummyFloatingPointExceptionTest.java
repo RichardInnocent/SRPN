@@ -7,7 +7,7 @@ public class DummyFloatingPointExceptionTest {
   @Test
   public void testConstructorMessage() {
     assertEquals(
-        "Floating point exception(core dumped)",
+        "Floating point exception (core dumped)",
         new DummyFloatingPointException().getMessage()
     );
   }

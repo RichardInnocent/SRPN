@@ -2,7 +2,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Operator responsible for performing the one operand by another.
+ * Operator responsible for performing the division of one operand by another.
  */
 public class DivisionOperator extends Operator {
 
