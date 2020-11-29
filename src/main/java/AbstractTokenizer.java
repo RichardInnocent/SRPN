@@ -8,8 +8,13 @@ public abstract class AbstractTokenizer implements Tokenizer {
   @Override
   public ExecutionState attemptTokenization(TokenizationResultBuilder resultBuilder)
       throws TokenizationException {
+    // Try to return the result, or wrap the exceptions if appropriate
     try {
       return attemptTokenizationAndThrowExceptions(resultBuilder);
+    } catch (FatalSrpnException e) {
+      /* FatalSrpnExceptions are meant to replicate the behaviour of the original SRPN so throw
+       * these as is. */
+      throw e;
     } catch (Exception e) {
       /* Wrap any exceptions in another exception type that more accurately conveys where the
        * problem area is. */

@@ -84,7 +84,7 @@ public final class BigOperandToken extends OperandToken {
       throws NumberFormatException, DummySegmentationFaultException {
     if (value.length() > 120) {
       /* If the value is longer than 120 characters in length (this includes the sign), then the
-       * original SRPN throw a segmentation fault and exit. We can mirror that here by throwing an
+       * original SRPN throws a segmentation fault and exits. We can mirror that here by throwing an
        * uncaught exception. */
       throw new DummySegmentationFaultException();
     }

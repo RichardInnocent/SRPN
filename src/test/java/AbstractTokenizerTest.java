@@ -48,4 +48,26 @@ public class AbstractTokenizerTest {
     }
   }
 
+  @Test
+  public void testAttemptTokenizationWillNotWrapFatalSrpnExceptions() {
+    Exception exceptionToThrow = new FatalSrpnException("Test exception");
+    Tokenizer badTokenizer = new AbstractTokenizer() {
+      @Override
+      protected ExecutionState attemptTokenizationAndThrowExceptions(
+          TokenizationResultBuilder resultBuilder) throws Exception {
+        throw exceptionToThrow;
+      }
+    };
+
+    String unprocessedCommand = "Unprocessed command";
+    TokenizationResultBuilder resultBuilder = mock(TokenizationResultBuilder.class);
+    when(resultBuilder.getUnprocessedCommand()).thenReturn(unprocessedCommand);
+
+    try {
+      badTokenizer.attemptTokenization(resultBuilder);
+    } catch (FatalSrpnException e) {
+      assertEquals(e, exceptionToThrow);
+    }
+  }
+
 }

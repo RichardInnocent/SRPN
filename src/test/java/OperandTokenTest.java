@@ -40,7 +40,7 @@ public class OperandTokenTest {
   @Test
   public void testLargeNumberInAsOctal() {
     String value = "012345670123456701234567012345670";
-    OperandToken token = OperandToken.forValue(value, 10);
+    OperandToken token = OperandToken.forValue(value, 8);
     assertEquals(new BigInteger(value, 8).toString(), token.getReadableValue());
     assertTrue(token instanceof BigOperandToken);
   }

@@ -7,7 +7,7 @@ public class DummySegmentationFaultExceptionTest {
   @Test
   public void testExceptionMessage() {
     assertEquals(
-        "Segmentation fault      (core dumped)",
+        "Segmentation fault (core dumped)",
         new DummySegmentationFaultException().getMessage()
     );
   }
