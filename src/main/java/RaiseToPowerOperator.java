@@ -1,3 +1,6 @@
+/**
+ * Operator responsible for handling raise to power operations.
+ */
 public class RaiseToPowerOperator extends Operator {
 
   @Override
