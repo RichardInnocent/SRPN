@@ -116,4 +116,26 @@ public class TokenGrouperTest {
     assertEquals(group4Token2, group4.getToken(1));
   }
 
+  @Test
+  public void testDisplayStackTokenIsPutInItsOwnGroup() {
+    Token token1 = OperandToken.forValue(3);
+    Token token2 = new DisplayStackToken();
+    Token token3 = OperandToken.forValue(5);
+
+    List<TokenGroup> groups = GROUPER.group(Arrays.asList(token1, token2, token3));
+    assertEquals(3, groups.size());
+
+    TokenGroup group1 = groups.get(0);
+    assertEquals(1, group1.size());
+    assertEquals(token1, group1.getToken(0));
+
+    TokenGroup group2 = groups.get(1);
+    assertEquals(1, group2.size());
+    assertEquals(token2, group2.getToken(0));
+
+    TokenGroup group3 = groups.get(2);
+    assertEquals(1, group3.size());
+    assertEquals(token3, group3.getToken(0));
+  }
+
 }

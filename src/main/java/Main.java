@@ -17,15 +17,15 @@ public class Main {
     SRPN srpn = new SRPN();
 
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-      //Keep on accepting input from the command-line
+      // Keep on accepting input from the command-line
       while (true) {
         String command = reader.readLine();
-        //Close on an End-of-file (EOF) (Ctrl-D on the terminal)
+        // Close on an End-of-file (EOF) (Ctrl-D on the terminal)
         if (command == null) {
-          //Exit code 0 for a graceful exit
+          // Exit code 0 for a graceful exit
           System.exit(0);
         }
-        //Otherwise, (attempt to) process the character
+        // Otherwise, (attempt to) process the character
         srpn.processCommand(command);
       }
     } catch(IOException e) {
