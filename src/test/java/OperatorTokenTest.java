@@ -78,16 +78,35 @@ public class OperatorTokenTest {
   }
 
   @Test
-  public void testCompareTo() {
+  public void testHasHigherPrecedenceThan() {
     OperatorToken highestPrecedence = createOperatorTokenWithPrecedence(2);
     OperatorToken mediumPrecedence = createOperatorTokenWithPrecedence(1);
     OperatorToken lowestPrecedence = createOperatorTokenWithPrecedence(0);
 
-    assertTrue(highestPrecedence.compareTo(mediumPrecedence) < 0);
-    assertTrue(mediumPrecedence.compareTo(highestPrecedence) > 0);
+    assertTrue(highestPrecedence.hasHigherPrecedenceThan(mediumPrecedence));
+    assertTrue(highestPrecedence.hasHigherPrecedenceThan(lowestPrecedence));
 
-    assertTrue(mediumPrecedence.compareTo(lowestPrecedence) < 0);
-    assertTrue(lowestPrecedence.compareTo(mediumPrecedence) > 0);
+    assertFalse(mediumPrecedence.hasHigherPrecedenceThan(highestPrecedence));
+    assertTrue(mediumPrecedence.hasHigherPrecedenceThan(lowestPrecedence));
+
+    assertFalse(lowestPrecedence.hasHigherPrecedenceThan(highestPrecedence));
+    assertFalse(lowestPrecedence.hasHigherPrecedenceThan(mediumPrecedence));
+  }
+
+  @Test
+  public void testHasLowerPrecedenceThan() {
+    OperatorToken highestPrecedence = createOperatorTokenWithPrecedence(2);
+    OperatorToken mediumPrecedence = createOperatorTokenWithPrecedence(1);
+    OperatorToken lowestPrecedence = createOperatorTokenWithPrecedence(0);
+
+    assertFalse(highestPrecedence.hasLowerPrecedenceThan(mediumPrecedence));
+    assertFalse(highestPrecedence.hasLowerPrecedenceThan(lowestPrecedence));
+
+    assertTrue(mediumPrecedence.hasLowerPrecedenceThan(highestPrecedence));
+    assertFalse(mediumPrecedence.hasLowerPrecedenceThan(lowestPrecedence));
+
+    assertTrue(lowestPrecedence.hasLowerPrecedenceThan(highestPrecedence));
+    assertTrue(lowestPrecedence.hasLowerPrecedenceThan(mediumPrecedence));
   }
 
   private static OperatorToken createOperatorTokenFromOperator(

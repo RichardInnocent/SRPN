@@ -22,7 +22,7 @@ public class TokenGroupExecutor {
         int numOperators = operatorTokens.size();
 
         // TODO can I do this with only one previous operator rather than a stack of them?
-        if (numOperators > 0 && operatorToken.compareTo(operatorTokens.peek()) > 0) {
+        if (numOperators > 0 && operatorToken.hasLowerPrecedenceThan(operatorTokens.peek())) {
           /* If this operator should be processed after the previous operator, apply all of the
            * operators in the stack. */
           flushOperators(operatorTokens);

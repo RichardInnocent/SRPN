@@ -3,7 +3,7 @@
  * handle the stack in each instance, allowing the calculation implementation to be handled purely
  * by the {@link Operator}.
  */
-public abstract class OperatorToken extends AbstractToken implements Comparable<OperatorToken> {
+public abstract class OperatorToken extends AbstractToken {
 
   /**
    * Gets the operator that is responsible for calculating the result.
@@ -57,14 +57,23 @@ public abstract class OperatorToken extends AbstractToken implements Comparable<
   }
 
   /**
-   * Operators with a higher precedence should appear first in a sorted collection.
-   * @param other The operator to compare.
-   * @return A value {@code < 0} if this operator token has a higher precedence than {@code other},
-   * {@code > 0} if {@code other} has a higher precedence, or {@code 0} if the precedences are
-   * equal.
+   * Determines if this operator token has a higher precedence than another.
+   * @param otherOperator The other operator token to compare.
+   * @return {@code true} if this token has a higher precedence than {@code otherOperator}, or
+   * {@code false} if the precedence is lower or equal.
    */
-  @Override
-  public int compareTo(OperatorToken other) {
-    return getOperator().compareTo(other.getOperator());
+  public boolean hasHigherPrecedenceThan(OperatorToken otherOperator) {
+    return getOperator().compareTo(otherOperator.getOperator()) < 0;
   }
+
+  /**
+   * Determines if this operator token has a lower precedence than another.
+   * @param otherOperator The other operator token to compare.
+   * @return {@code true} if this token has a lower precedence than {@code otherOperator}, or
+   * {@code false} if the precedence is higher or equal.
+   */
+  public boolean hasLowerPrecedenceThan(OperatorToken otherOperator) {
+    return getOperator().compareTo(otherOperator.getOperator()) > 0;
+  }
+
 }
