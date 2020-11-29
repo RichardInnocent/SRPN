@@ -1,54 +1,83 @@
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Stack;
 
+/**
+ * Responsible for executing the tokens in a group or groups. Groups are executed sequentially.
+ * When executing a group, all tokens are applied immediately, except for {@link OperandToken}s.
+ * These tokens are added to a separate operator stack, where they remain until either:
+ * <ul>
+ *   <li>the next detected operator has a lower precedence</li>
+ *   <li>the end of the group is reached</li>
+ * </ul>
+ * At this point, the operator stack is flushed, applying each token to the operand stack in turn.
+ */
 public class TokenGroupExecutor {
 
-  private final SizeRestrictedStack<Double> operandStack = new SizeRestrictedStack<>(23);
+  private final SizeRestrictedStack<Double> operandStack;
 
+  /**
+   * Creates a new executor, responsible for executing grouped tokens. This uses the default operand
+   * stack.
+   */
+  public TokenGroupExecutor() {
+    this(new SizeRestrictedStack<>(23));
+  }
+
+  /**
+   * Creates a new executor, responsible for executing grouped tokens. This is provided for testing
+   * as it allows the operandStack to be injected.
+   * @param operandStack The operand stack.
+   * @throws NullPointerException Thrown if {@code operandStack == null}.
+   */
+  TokenGroupExecutor(SizeRestrictedStack<Double> operandStack) throws NullPointerException {
+    this.operandStack = Objects.requireNonNull(operandStack, "Operand stack is null");
+  }
+
+  /**
+   * Executes all of the tokens in each group, making sure to complete the processing of one group
+   * before moving onto the next.
+   * @param tokenGroups The groups of tokens.
+   */
   public void execute(List<TokenGroup> tokenGroups) {
     tokenGroups.forEach(this::execute);
   }
 
-  public void execute(TokenGroup tokenGroup) throws IllegalArgumentException {
+  /**
+   * Executes all of the tokens in the group.
+   * @param tokenGroup The group of tokens to execute.
+   */
+  public void execute(TokenGroup tokenGroup) {
+    if (tokenGroup.isEmpty()) {
+      // Not required, but it saves initialising redundant objects
+      return;
+    }
+
     List<Token> tokens = tokenGroup.getTokens();
     Stack<OperatorToken> operatorTokens = new Stack<>();
 
-    for (int i = 0; i < tokens.size(); i++) {
-      Token token = tokens.get(i);
+    // Iterate over every token
+    for (Token token : tokens) {
+
+      // Operators should be delayed in execution, instead added to a separate operator stack
       if (token instanceof OperatorToken) {
         OperatorToken operatorToken = (OperatorToken) token;
 
-        int numOperators = operatorTokens.size();
-
-        // TODO can I do this with only one previous operator rather than a stack of them?
-        if (numOperators > 0 && operatorToken.hasLowerPrecedenceThan(operatorTokens.peek())) {
+        if (operatorTokens.size() > 0 &&
+            operatorToken.hasLowerPrecedenceThan(operatorTokens.peek())) {
           /* If this operator should be processed after the previous operator, apply all of the
-           * operators in the stack. */
+           * operators in the stack before adding this one. */
           flushOperators(operatorTokens);
-
-          Optional<OperandToken> consecutivelyNextOperandToken = getOperandTokenAtIndex(i+1, tokens);
-          if (consecutivelyNextOperandToken.isPresent()) {
-            consecutivelyNextOperandToken.get().apply(operandStack);
-            i++; // Skip the next value as it's already been added
-          }
         }
         operatorTokens.push(operatorToken);
 
       } else {
+        // All other tokens should be applied immediately
         applyTokenAndHandleExceptions(token);
       }
     }
 
     flushOperators(operatorTokens);
-  }
-
-  private Optional<OperandToken> getOperandTokenAtIndex(int index, List<Token> tokens) {
-    if (index >= tokens.size()) {
-      return Optional.empty();
-    }
-    Token token = tokens.get(index);
-    return token instanceof OperandToken ? Optional.of((OperandToken) token) : Optional.empty();
   }
 
   private void applyTokenAndHandleExceptions(Token token) {
@@ -62,16 +91,9 @@ public class TokenGroupExecutor {
   }
 
   private void flushOperators(Stack<OperatorToken> operatorTokens) {
-    if (operatorTokens.isEmpty()) {
-      return;
-    }
-
+    // Apply each operator to the operator stack in turn
     while (!operatorTokens.isEmpty()) {
-      try {
-        operatorTokens.pop().apply(operandStack);
-      } catch (CalculatorException e) {
-        System.out.println(e.getMessage());
-      }
+      applyTokenAndHandleExceptions(operatorTokens.pop());
     }
   }
 
