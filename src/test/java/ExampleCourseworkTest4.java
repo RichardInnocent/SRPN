@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import org.junit.Test;
 
-public class SRPNTest4 extends SystemOutTest {
+public class ExampleCourseworkTest4 extends SystemOutTest {
 
   private final SRPN srpn = new SRPN();
 

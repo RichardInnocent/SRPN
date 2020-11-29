@@ -2,7 +2,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class SRPNTest3 extends SystemOutTest {
+public class ExampleCourseworkTest3 extends SystemOutTest {
 
   private final SRPN srpn = new SRPN();
 
