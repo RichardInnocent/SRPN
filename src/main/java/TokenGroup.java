@@ -1,7 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
+/**
+ * A token group represents a sequence of tokens that should be executed in one stage. Only one
+ * group should be executed at a time.
+ */
 public class TokenGroup {
 
   private final List<Token> tokens = new ArrayList<>();
@@ -54,14 +57,17 @@ public class TokenGroup {
     Token previousToken = tokens.get(currentTokens-1);
 
     if (!isMinusSign(previousToken)) {
-      // If the previous token isn't a minus sign, we don't need to flip anything!
+      // If the previous token isn't a minus sign, we don't need to flip anything
       return false;
     }
 
     if (currentTokens == 1) {
+      // Only one previous token and this is a subtraction sign. Let's flip the sign
       return true;
     }
 
+    /* Check if the token before the minus sign is another minus sign. In this case, don't bother
+     * flipping it. */
     Token tokenBeforePrevious = tokens.get(currentTokens-2);
     return !isNumeric(tokens.get(currentTokens-2)) && !isMinusSign(tokenBeforePrevious);
   }
@@ -74,22 +80,37 @@ public class TokenGroup {
     return token instanceof OperandToken;
   }
 
+  /**
+   * Gets all of the tokens in the group. Note that this returns a copy of the tokens in the group -
+   * modifying the returned list will not affect this group.
+   * @return The tokens in the group.
+   */
   public List<Token> getTokens() {
     return new ArrayList<>(tokens);
   }
 
-  public Token getToken(int index) {
+  /**
+   * Gets the token at a particular index.
+   * @param index The index of the token to retrieve.
+   * @return The token at the specified index.
+   * @throws IndexOutOfBoundsException Thrown if {@code index < 0 || index >= size()}.
+   */
+  public Token getToken(int index) throws IndexOutOfBoundsException {
     return tokens.get(index);
   }
 
-  public Stream<Token> streamTokens() {
-    return tokens.stream();
-  }
-
+  /**
+   * Determines whether this group is empty, i.e. it contains no tokens.
+   * @return {@code true} if this group contains no tokens.
+   */
   public boolean isEmpty() {
     return tokens.isEmpty();
   }
 
+  /**
+   * Gets the number of tokens in the group.
+   * @return The number of tokens in the group.
+   */
   public int size() {
     return tokens.size();
   }

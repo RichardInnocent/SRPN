@@ -32,4 +32,16 @@ public class TokenGroupTest {
     assertEquals(OperandToken.forValue(-3), group.getToken(0));
   }
 
+  @Test
+  public void testAddingNumericTokenAfterTwoMinusSignsDoesNotFlipValue() {
+    TokenGroup group = new TokenGroup();
+    group.addAndTidy(new SubtractionToken());
+    group.addAndTidy(new SubtractionToken());
+    group.addAndTidy(OperandToken.forValue(3));
+    assertEquals(3, group.size());
+    assertTrue(group.getToken(0) instanceof SubtractionToken);
+    assertTrue(group.getToken(1) instanceof SubtractionToken);
+    assertEquals(OperandToken.forValue(3), group.getToken(2));
+  }
+
 }
