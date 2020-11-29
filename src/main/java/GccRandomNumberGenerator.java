@@ -16,7 +16,7 @@
  * <a href="https://github.com/lattera/glibc/blob/master/stdlib/random_r.c">here</a>. I removed the
  * unnecessary parts of the algorithm (such as the random type) and implemented it in Java.</p>
  */
-public class GccRandomNumberGenerator {
+public class GccRandomNumberGenerator implements RandomNumberGenerator {
 
   // Equivalent to the randtbl - this is modified by the algorithm
   private final int[] randomTable = {
@@ -35,6 +35,7 @@ public class GccRandomNumberGenerator {
    * function.
    * @return A random integer.
    */
+  @Override
   public int nextInt() {
     randomTable[frontIndex] += randomTable[rearIndex];
     int returnValue = randomTable[frontIndex] >> 1;
