@@ -1,3 +1,7 @@
+/**
+ * Responsible for converting raw text commands into tokens.
+ */
+@FunctionalInterface
 public interface Tokenizer {
 
   /**

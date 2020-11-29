@@ -9,7 +9,9 @@ public class WhitespaceToken extends AbstractToken {
   }
 
   @Override
-  public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {}
+  public void apply(SizeRestrictedStack<Double> operandStack) throws CalculatorException {
+    // Do nothing - whitespace has no effect on the stack, it only affects the grouping of tokens
+  }
 
   @Override
   public int hashCode() {
