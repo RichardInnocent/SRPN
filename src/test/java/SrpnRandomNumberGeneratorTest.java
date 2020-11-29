@@ -1,0 +1,124 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class SrpnRandomNumberGeneratorTest {
+
+  private static final SrpnRandomNumberGenerator RANDOM_NUMBER_GENERATOR =
+      SrpnRandomNumberGenerator.getInstance();
+
+  @Test
+  public void testMatchesTheFirst110NumbersGeneratedFromTheSrpn() {
+    assertEquals(1804289383, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(846930886, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1681692777, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1714636915, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1957747793, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(424238335, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(719885386, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1649760492, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(596516649, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1189641421, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1025202362, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1350490027, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(783368690, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1102520059, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(2044897763, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1967513926, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1365180540, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1540383426, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(304089172, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1303455736, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(35005211, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(521595368, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1804289383, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(846930886, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1681692777, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1714636915, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1957747793, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(424238335, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(719885386, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1649760492, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(596516649, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1189641421, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1025202362, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1350490027, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(783368690, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1102520059, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(2044897763, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1967513926, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1365180540, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1540383426, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(304089172, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1303455736, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(35005211, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(521595368, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(294702567, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1726956429, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(336465782, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(861021530, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(278722862, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(233665123, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(2145174067, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(468703135, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1101513929, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1801979802, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1315634022, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(635723058, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1369133069, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1125898167, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1059961393, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(2089018456, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(628175011, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1656478042, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1131176229, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1653377373, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(859484421, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1914544919, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(608413784, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(756898537, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1734575198, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1973594324, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(149798315, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(2038664370, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1129566413, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(184803526, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(412776091, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1424268980, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1911759956, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(749241873, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(137806862, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(42999170, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(982906996, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(135497281, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(511702305, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(2084420925, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1937477084, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1827336327, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(572660336, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1159126505, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(805750846, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1632621729, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1100661313, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1433925857, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1141616124, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(84353895, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(939819582, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(2001100545, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1998898814, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1548233367, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(610515434, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1585990364, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1374344043, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(760313750, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1477171087, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(356426808, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(945117276, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1889947178, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1780695788, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(709393584, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(491705403, RANDOM_NUMBER_GENERATOR.nextInt());
+    assertEquals(1918502651, RANDOM_NUMBER_GENERATOR.nextInt());
+  }
+
+}
