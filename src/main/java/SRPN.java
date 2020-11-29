@@ -3,10 +3,89 @@ import java.util.List;
 /**
  * <p>The SRPN (saturated reverse Polish notation calculator) is responsible for handling commands
  * and generating the appropriate output to display to the user. The SRPN is accessed publicly via
- * the {@link #processCommand(String)} method. When a command is received, the SRPN processes this
- * through a number of stages, described below.
- * </p>
+ * the {@link #processCommand(String)} method.</p>
+ * <p>The SRPN recognises various different input types, described in the table below.</p>
+ * <br />
+ * <table>
+ *   <tr>
+ *     <th>Type</th>
+ *     <th>Symbol/example</th>
+ *     <th>Result</th>
+ *   </tr>
+ *   <tr>
+ *     <td>Operand (base 10)</td>
+ *     <td>100</td>
+ *     <td>An integer value that can be operated upon (100, in this case).</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Operand (base 8)</td>
+ *     <td>010</td>
+ *     <td>An integer value that can be operated upon (8 in this case). Numbers starting with a zero
+ *     and then being proceeded by any character in the range {@code [0-7]} will be interpreted as
+ *     octal. Note that, when displaying this value, the result will always be displayed in base
+ *     10.</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Random number</td>
+ *     <td>{@code r}</td>
+ *     <td>Generates a random number between 0 and 32,767 that will then be treated as an operand.
+ *     </td>
+ *   </tr>
+ *   <tr>
+ *     <td>Equals</td>
+ *     <td>{@code =}</td>
+ *     <td>Peeks on the stack, or prints {@code "Stack empty."} if the stack is empty.</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Display stack</td>
+ *     <td>{@code d}</td>
+ *     <td>Prints the stack from oldest entry to newest, or prints {@link Integer#MIN_VALUE} if the
+ *     stack is empty.</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Addition</td>
+ *     <td>{@code +}</td>
+ *     <td>Adds two operands together.</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Subtraction</td>
+ *     <td>{@code -}</td>
+ *     <td>Subtracts one operand from another.</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Multiplication</td>
+ *     <td>{@code *}</td>
+ *     <td>Calculates the product of two operands.</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Division</td>
+ *     <td>{@code /}</td>
+ *     <td>Divides one operand by another.</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Raise to power</td>
+ *     <td>{@code ^}</td>
+ *     <td>Raises one operand to an exponent.</td>
+ *   </tr>
+ *   <tr>
+ *     <td>Modulo</td>
+ *     <td>%</td>
+ *     <td>Calculates the modulus of one operand by another.</td>
+ *   </tr>
+ * </table>
+ * <br />
+ * <p>Note that this calculator is saturated - as a result, any operations that would result in a
+ * value {@code > Integer.MAX_VALUE} or {@code < Integer.MIN_VALUE} will be returned as
+ * {@code Integer.MAX_VALUE} and {@code Integer.MIN_VALUE} respectively.</p>
+ * <p>This calculator can be used both in reverse Polish notation, and also using common operator
+ * notation. To use reverse Polish notation, the values and operators should be separated by
+ * whitespace or new lines. For example:
+ * <pre><code>20 10-5 / =</code></pre>
+ * would result in the output of {@code 4}.</p>
+ * <br /><br />
  * <h2>Compilation and Execution Stages</h2>
+ * <p>When a command is received, the SRPN processes this through a number of stages to derive the
+ * result.</p>
  * <h3>1. Tokenization</h3>
  * <p>The tokenization stage takes the raw input string and converts this into a sequence of tokens
  * using an {@link InputLineTokenizer}. For example
