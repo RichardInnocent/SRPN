@@ -11,12 +11,17 @@ public abstract class SingleCharacterTokenTokenizer<T extends Token> extends Abs
   @Override
   protected ExecutionState attemptTokenizationAndThrowExceptions(
       TokenizationResultBuilder resultBuilder) throws Exception {
-    Optional<T> token = buildToken(resultBuilder.getUnprocessedCommand().charAt(0));
+    // Try to build the token from the character at the start of the unprocessed command
+    Optional<T> token = buildToken(resultBuilder.getNextUnprocessedCharacter());
+
     if (token.isPresent()) {
+      // The tokenization was successful - add the token and consume this character
       resultBuilder.addToken(token.get());
       resultBuilder.incrementCurrentIndex();
       return ExecutionState.SUCCEEDED;
     }
+
+    // Tokenization was unsuccessful - don't advance the command
     return ExecutionState.FAILED;
   }
 

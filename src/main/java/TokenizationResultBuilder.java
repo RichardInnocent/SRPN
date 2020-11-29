@@ -59,12 +59,18 @@ public class TokenizationResultBuilder {
       // Not necessary but saves us initialising a redundant string object
       return command;
     }
-    if (currentIndex >= command.length()) {
+    if (isComplete()) {
       /* If there's no remaining command, return an empty string. This allows us to use the String
        * pool and avoid StringIndexOutOfBoundsExceptions. */
       return "";
     }
     return command.substring(currentIndex);
+  }
+
+  public char getNextUnprocessedCharacter() {
+    // Return the next unprocessed character. If everything is processed, this should never be
+    // called, but returning the null
+    return isComplete() ? '\0' : command.charAt(currentIndex);
   }
 
 }
