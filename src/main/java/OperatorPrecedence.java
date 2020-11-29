@@ -9,31 +9,31 @@ public class OperatorPrecedence {
   /**
    * The precedence for modulo operations.
    */
-  public static int MODULO = 60;
+  public static int MODULO = 6;
 
   /**
    * The precedence for raise to power operations.
    */
-  public static int RAISE_TO_POWER = 50;
+  public static int RAISE_TO_POWER = 5;
 
   /**
    * The precedence for division operations.
    */
-  public static int DIVISION = 40;
+  public static int DIVISION = 4;
 
   /**
    * The precedence for multiplication operations.
    */
-  public static int MULTIPLICATION = 30;
+  public static int MULTIPLICATION = 3;
 
   /**
    * The precedence for addition operations.
    */
-  public static int ADDITION = 20;
+  public static int ADDITION = 2;
 
   /**
    * The precedence for subtraction operations.
    */
-  public static int SUBTRACTION = 10;
+  public static int SUBTRACTION = 1;
 
 }
