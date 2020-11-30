@@ -33,9 +33,9 @@ public class TokenGroup {
    * all of the following conditions are met:</p>
    * <ul>
    *   <li>{@code token} is an {@link OperandToken}</li>
-   *   <li>The previous token is a {@link SubtractionToken}</li>
-   *   <li>The token before that is either non-existent (i.e. the {@code SubtractionToken} is at the
-   *   start of the group), or is not numeric or another minus sign</li>
+   *   <li>There is an odd number of consecutive {@link SubtractionToken}s prior to the operand.</li>
+   *   <li>The consecutive {@link SubtractionToken}s occur at the start of the group, or after
+   *   another operand.</li>
    * </ul>
    * <p>The last condition is particularly important as it ensures that {@code 3-5} is interpreted
    * as {@code [3] [-] [5]}, while {@code d-5} is interpreted as {@code [d] [-5]}. Also, strangely,
@@ -53,23 +53,30 @@ public class TokenGroup {
       return false;
     }
 
-    int currentTokens = tokens.size();
-    Token previousToken = tokens.get(currentTokens-1);
-
-    if (!isMinusSign(previousToken)) {
-      // If the previous token isn't a minus sign, we don't need to flip anything
+    int numberOfTrailingSubtractionTokens = getNumberOfTrailingSubtractionTokens();
+    if (numberOfTrailingSubtractionTokens % 2 == 0) {
       return false;
     }
+    return trailingSubtractionTokensAreAtStartOfGroupOrAfterOperator(
+        numberOfTrailingSubtractionTokens);
+  }
 
-    if (currentTokens == 1) {
-      // Only one previous token and this is a subtraction sign. Let's flip the sign
-      return true;
+  private boolean trailingSubtractionTokensAreAtStartOfGroupOrAfterOperator(
+      int numberOfTrailingSubtractionTokens) {
+    int previousIndex = tokens.size() - numberOfTrailingSubtractionTokens - 1;
+    return previousIndex < 0 || isOperator(tokens.get(previousIndex));
+  }
+
+  private int getNumberOfTrailingSubtractionTokens() {
+    int count = 0;
+    for (int i = tokens.size() - 1; i >= 0; i--) {
+      if (isMinusSign(tokens.get(i))) {
+        count++;
+      } else {
+        break;
+      }
     }
-
-    /* Check if the token before the minus sign is another minus sign. In this case, don't bother
-     * flipping it. */
-    Token tokenBeforePrevious = tokens.get(currentTokens-2);
-    return !isNumeric(tokens.get(currentTokens-2)) && !isMinusSign(tokenBeforePrevious);
+    return count;
   }
 
   private boolean isMinusSign(Token token) {
@@ -78,6 +85,10 @@ public class TokenGroup {
 
   private boolean isNumeric(Token token) {
     return token instanceof OperandToken;
+  }
+
+  private boolean isOperator(Token token) {
+    return token instanceof OperatorToken;
   }
 
   /**
