@@ -28,8 +28,8 @@ import java.util.List;
  *   <tr>
  *     <td>Random number</td>
  *     <td>{@code r}</td>
- *     <td>Generates a random number between 0 and 32,767 that will then be treated as an operand.
- *     </td>
+ *     <td>Generates a random number between 0 and {@link Integer#MAX_VALUE} that will then be
+ *     treated as an operand.</td>
  *   </tr>
  *   <tr>
  *     <td>Equals</td>

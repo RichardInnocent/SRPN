@@ -38,7 +38,8 @@ public class GccRandomNumberGenerator implements RandomNumberGenerator {
   @Override
   public int nextInt() {
     randomTable[frontIndex] += randomTable[rearIndex];
-    int returnValue = randomTable[frontIndex] >> 1;
+
+    int returnValue = randomTable[frontIndex] >>> 1;
 
     frontIndex++;
     rearIndex++;
@@ -52,18 +53,8 @@ public class GccRandomNumberGenerator implements RandomNumberGenerator {
        * randomTable.length at the same time so this is slightly more efficient. */
       rearIndex = 0;
     }
-
-    /* The C return value is unsigned, while Java's implementation is not. Therefore, if the return
-     * value is negative, we have to flip the first bit which indicates the sign. To do this, we
-     * can just AND it with a binary number consisting of all 1s except for the first bit. */
-    return unsign(returnValue);
-  }
-
-  private int unsign(int value) {
-    /* The C return value is unsigned, while Java's implementation is not. Therefore, if the return
-     * value is negative, we have to flip the first bit which indicates the sign. To do this, we
-     * can just AND it with a binary number consisting of all 1s except for the first bit. */
-    return value & 0x7fffffff;
+    
+    return returnValue;
   }
 
 }
