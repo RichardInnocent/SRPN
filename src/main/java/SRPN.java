@@ -144,8 +144,13 @@ public class SRPN {
     this.executor = executor;
   }
 
+  /**
+   * Processes the given command and prints the outputs if applicable.
+   * @param command The command to process.
+   */
   public void processCommand(String command) {
     if (command == null || command.isBlank()) {
+      // Nothing to process
       return;
     }
 
