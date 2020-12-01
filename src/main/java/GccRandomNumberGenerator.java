@@ -1,12 +1,12 @@
 /**
  * <p>While the random numbers are predictable for the first 44 entries (as the first 22 repeat),
- * this repeating pattern unfortunately does not repeat. However, I noticed that the subsequent
- * numbers were always reproducible. From looking at the format of the runtime errors that were
- * occasionally thrown by the calculator, I'd already deducted that the original program was most
- * likely written in C or C++. From past experience, I know that C's {@code rand()} function is only
- * pseudorandom, and will continue to generate the same random numbers given the same seed. I did
- * some testing in repl.it and pleasantly discovered that the random table was generated using the
- * default seed.</p>
+ * this repeating pattern unfortunately does not repeat thereafter. However, I noticed that the
+ * subsequent numbers were always reproducible. From looking at the format of the runtime errors
+ * that were occasionally thrown by the calculator, I'd already deducted that the original program
+ * was most likely written in C or C++. From past experience, I know that C's {@code rand()}
+ * function is only pseudorandom, and will continue to generate the same random numbers given the
+ * same seed. I did some testing in repl.it and pleasantly discovered that the random table was
+ * generated using the default seed.</p>
  * <p>Therefore, all I had to do was replicate C's generation of random numbers. After some digging,
  * I found the source code of the GNU C Library - found
  * <a href="https://github.com/lattera/glibc">here</a> (accessed 22/11/2020).</p>
