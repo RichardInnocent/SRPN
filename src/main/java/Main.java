@@ -28,7 +28,7 @@ public class Main {
         // Otherwise, (attempt to) process the character
         srpn.processCommand(command);
       }
-    } catch(IOException e) {
+    } catch (Exception e) {
       // Fatal error messages are printed to stderr as per the legacy SRPN
       System.err.println(e.getMessage());
       System.exit(1);
